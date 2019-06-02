@@ -1,38 +1,44 @@
 # Eindproject proposal
 #### Sofie Löhr (11038926)
-Paragraph summary of the application goals
-
+Chosing your holiday destination includes a lot of variables, from whom the weather expectation is one. Can you see this coherence when visualizing the data?
 
 ## Problem statement
-
-Chosing your holiday destination includes a lot of variables, from whom the weather expectation is one. As the climate around the world is changing and tourism and weather seem highly correlated, it is good to visualize the most important weather and tourism factors side by side to see if there is a connection. Determining the effect of climate change on tourism would be something for future work, but stating the fact that there is a relationship would be a good start. Since Europe has the most international tourists arrivals from all the continents in the world (European Union Tourism Trends), this is the area I will be focussing on. 
+ As the climate around the world is changing and tourism and climate seem highly correlated, it is good to visualize the most important weather and tourism factors side by side to see if there is a connection. Determining the effect of climate change on tourism would be something for future work, but stating the fact that there is coherence could be a good start. Since Europe has the most international tourists arrivals from all the continents in the world (European Union Tourism Trends), this is the area I will be focussing on. 
 
 ## Solution
+To visualize this relationship I will first show a bubble chart, with color intensity stating the temperature variable (for example average temperature) and size stating the tourism variable (for example international arrivals or number of trips). Additional information when hovered will show next to it. 
+
+This bubble chart will be interactive by chosing the season (spring, summer, autumn, winter),
+
+![sketch](doc/bubble_chart_example.png)
+
+An additional (pop up) window when clicked on one of the (country) bubbles will have specific information about that country. 
++ Circle diagram with tourism purpose/duration
++ Scatterplot for the relationship of tourism and temperature
+
+## Prerequisites
+
+### Data Sources
+##### Climate data from: 
++ (https://www.ecad.eu/index.php)
++ (https://www.ecad.eu/dailydata/predefinedseries.php#)
+
+##### Tourism data from:
++ (https://ec.europa.eu/eurostat/web/tourism/data/database)
++ (https://www.kaggle.com/ajaafer/tourism-expenditures-of-total-imports)
++ (https://data.worldbank.org/indicator/ST.INT.ARVL)
+
+### External Components
+- [D3](https://d3js.org/)
+- [D3-tip](https://github.com/Caged/d3-tip)
+- [Atom](atom.io)
+
+### Hardest parts
++ Arranging the data in the right way, since I have a lot of different sources
++ Bubble chart implementation
 
 
-
-Map of Europe with temperature intensities. 
-Scatterplot of temperature variable with tourism (international tourist arrivals), dropbown menu to change to something???
-
-If you press country on the map you will see specific data about the weather and tourism:
-Weather:
-+ percentage of sun hours
-+ rain
-+ average temperature by month to see the distribution around the year
-Tourism:
-+ tourism spendings % of total import
-+ number of trips by purpose
-+ nights spend at accomodations over the year (country specific)
-
-You can switch between these 2 pages of weather and tourism with a menu or butten or drop down
-
-## Data
-Climate data from: 
-+ https://www.ecad.eu/index.php
-+ https://www.ecad.eu/dailydata/predefinedseries.php#
-
-Tourism data from:
-+ https://ec.europa.eu/eurostat/web/tourism/data/database
-+ https://www.kaggle.com/ajaafer/tourism-expenditures-of-total-imports
-+ 
-
+## Reverences
+Bubble chart example:
+[NFour Ways to Slice Obama’s 2013 Budget Proposal](https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html)
+[D3 Bubble Chart](http://bl.ocks.org/phuonghuynh/54a2f97950feadb45b07)

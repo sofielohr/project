@@ -7,6 +7,7 @@ Chosing your holiday destination includes a lot of variables, from whom the weat
 
 ## Solution
 Since Europe has the most international tourists arrivals from all the continents in the world (European Union Tourism Trends), this is the area I will be focussing on. 
+
 To visualize this relationship I will first show a bubble chart, with color intensity stating the temperature variable (for example average temperature) and size stating the tourism variable (for example international arrivals or number of trips). Additional information when hovered will show next to it. 
 
 This bubble chart will be interactive by chosing the season (spring, summer, autumn, winter).
@@ -40,5 +41,5 @@ An additional (pop up) window when clicked on one of the (country) bubbles will 
 
 ## Reverences
 Bubble chart example:
-+ [NFour Ways to Slice Obama’s 2013 Budget Proposal](https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html)
++ [Four Ways to Slice Obama’s 2013 Budget Proposal](https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html)
 + [D3 Bubble Chart](http://bl.ocks.org/phuonghuynh/54a2f97950feadb45b07)

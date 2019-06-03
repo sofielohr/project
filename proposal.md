@@ -3,6 +3,7 @@
 Chosing your holiday destination includes a lot of variables, from whom the weather expectation is one. Can you see this coherence when visualizing the data?
 
 ## Problem statement
+For countries 
 As the climate around the world is changing and tourism and climate seem highly correlated, it is good to visualize the most important weather and tourism factors side by side to see if there is a connection. Determining the effect of climate change on tourism would be something for future work, but stating the fact that there is coherence could be a good start so that is what I will do.
 
 ## Solution
@@ -15,8 +16,10 @@ This bubble chart will be interactive by chosing the YEAR.
 ![sketch](doc/bubble_chart_example.png)
 
 An additional (pop up) window when clicked on one of the (country) bubbles will have specific information about that country in the selected year. 
-+ Circle diagram with number of trips by month of departure
-+ Line chart of daily (montly) minimal and maximal temperature to show the climate over the year 
++ Line chart with dual axis (over time) of daily average temperature together with the tourism value to see the relationship over time. 
++ Circle diagram with 
+
+![sketch](doc/pop_up_window.png)
 
 ## Prerequisites
 

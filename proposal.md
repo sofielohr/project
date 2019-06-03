@@ -15,8 +15,8 @@ This bubble chart will be interactive by chosing the YEAR.
 ![sketch](doc/bubble_chart_example.png)
 
 An additional (pop up) window when clicked on one of the (country) bubbles will have specific information about that country in the selected year. 
-+ Circle diagram with tourism purpose/duration
-+ Line chart of daily minimal and maximal temperature to show the climate over the year 
++ Circle diagram with number of trips by month of departure
++ Line chart of daily (montly) minimal and maximal temperature to show the climate over the year 
 
 ## Prerequisites
 
@@ -36,12 +36,13 @@ An additional (pop up) window when clicked on one of the (country) bubbles will 
 + [Sublime Text 2](https://www.sublimetext.com/2)
 
 ### Hardest parts
-+ Arranging and combining the data in the right way, since I have a lot of different sources
++ Arranging and combining the data in the right way, since I have a lot of different sources which are not easy to use
 + Bubble chart implementation (if I have time I will implement moving bubbles when clicked)
 + If time, instead of line chart for minimal and maximal temperature, I will implement a steamgraph
 
-## Reverences
+## Reverences/simular visualizations
 Bubble chart example:
 + [Four Ways to Slice Obama’s 2013 Budget Proposal](https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html)
 + [D3 Bubble Chart](http://bl.ocks.org/phuonghuynh/54a2f97950feadb45b07)
-+ [European Union Tourism Trends](https://www.e-unwto.org/doi/pdf/10.18111/9789284419470)
+
+[European Union Tourism Trends](https://www.e-unwto.org/doi/pdf/10.18111/9789284419470)

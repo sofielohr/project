@@ -48,4 +48,4 @@ Below you see the technical components of the visualization page.
 Overall I will need D3. The plugins i use are:
 + D3 tip (bubble chart, maybe pie and line chart)
 + D3 legend (bubble chart, piechart, maybe line chart)
-+ Bootstrap (interactive elements)
++ Bootstrap (interactive elements, modal window)

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Project January</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="homepage.html">Sofie Löhr</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="homepage.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li class="active"><a href="visualizations.html"><span class="glyphicon glyphicon-signal"></span> Visualization</a></li>
+        <li><a href="information.html"><span class="glyphicon glyphicon-info-sign"></span> Information</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Visualizations</h1>
+  <p>Resize this responsive page to see the effect!</p> 
+</div>
+
+<div class="container">
+  <div class="row">
+    <h2>Bubble chart</h2>
+    <h5>Tourism and climate</h5>
+    <!-- Button trigger modal-->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRelatedContent">Pop up</button>
+  </div>
+</div>
+
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+	<footer class="text-center">
+				<strong>Sofie Löhr</strong><br>
+				<strong>University of Amsterdam</strong><br>
+				<span>Student number: 11038926</span><br>
+				<span>Minor Programming</span><br>
+				<span>Programming Project</span>
+			</footer>
+			<br>
+</div>
+
+
+
+<!--Modal: modalRelatedContent-->
+<div class="modal fade right" id="modalRelatedContent" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-fluid modal-bottom-right modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">Pop up window: pie and line chart</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-7">
+            <p><strong>My travel to paradise</strong></p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit [...]</p>
+            <button type="button" class="btn btn-info btn-md">Read more</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalRelatedContent-->
+</body>
+</html>
+

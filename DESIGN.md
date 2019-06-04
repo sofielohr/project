@@ -34,8 +34,8 @@ The pages of the website will be like this.
 ![pages](doc/Home_Viz_Info_page.png)
 
 In the bubble chart, the relationship between temperature and tourism will be visible. By hovering on a (country) bubble, the specifics of that country will become visible in a small infosheet. By clicking on the (country) bubble a (pop up) window will give specific information about that country in the selected year. This will be done by a dual axis linechart of the tourism variable per month together with the average temperature. To see the division of inbound, domestic and outbound tourism, a piechart can be chosen by a dropdown with as options:
-	+ Piechart of incoming tourism (same variable as the line graph) divided by country of residence: foreign or reporting country.
-	+ Piechart of outgoing tourism (residents) by country of destination: own country (country of residence) and other options (for example continents or other EU countries). This is another variable than in the linegraph.
++ Piechart of incoming tourism (same variable as the line graph) divided by country of residence: foreign or reporting (own) country.
++ Piechart of outgoing tourism (residents) by country of destination: own country (country of residence) and other countries (for example continents or other EU countries). This is another variable than in the linegraph.
 
 Below you see the technical components of the visualization page.
 

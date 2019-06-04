@@ -12,7 +12,7 @@ To visualize this relationship I will first show a bubble chart, with color inte
 
 This bubble chart will be interactive by chosing the YEAR. You can see an example sketch below. 
 
-![sketch](doc/bubble_chart_example.png)
+![bubble](doc/bubble_chart_example.png)
 
 An additional (pop up) window when clicked on one of the (country) bubbles will have specific information about that country in the selected year. 
 + Line chart with dual axis (over time) of daily average temperature together with the tourism value to see the relationship over time per year. 
@@ -20,7 +20,7 @@ An additional (pop up) window when clicked on one of the (country) bubbles will 
 
 Below you can see an example sketch. 
 
-![sketch](doc/pop_up_window.png)
+![popup](doc/pop_up_window.png)
 
 ## Prerequisites
 
@@ -34,6 +34,7 @@ Below you can see an example sketch.
 ### External Components
 + [D3](https://d3js.org/)
 + [D3-tip](https://github.com/Caged/d3-tip)
++ D3 legend
 + [Atom](atom.io)
 + [Sublime Text 2](https://www.sublimetext.com/2)
 

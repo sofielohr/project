@@ -38,10 +38,10 @@ In the bubble chart, the relationship between temperature and tourism will be vi
 
 This will be done by a piechart/barchart/linechart of the tourism variable per month. To see the temperature behaviour in the selected year I will make a line chart (Steam map) with the minimal, maximal and average temperature (by day/month) for the specific country.
 
-##### Bubble Chart
+#### Bubble Chart
 ![bubble](doc/bubble_chart_example.png)
 
-##### Pie chart & Line chart
+#### Pop up: pie chart & line chart
 ![popup](doc/pop_up_window.png)
 
 

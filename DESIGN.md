@@ -41,6 +41,8 @@ This will be done by a piechart/barchart/linechart of the tourism variable per m
 #### Total design
 ![total](doc/total_design.png)
 
-
-
-## D3 plugins
+## External components & D3 plugins
+Overall I will need D3. The plugins i use are:
++ D3 tip (bubble chart, maybe pie and line chart)
++ D3 legend (bubble chart, piechart, maybe line chart)
++ Bootstrap (interactive elements)

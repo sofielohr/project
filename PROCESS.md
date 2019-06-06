@@ -12,3 +12,6 @@ Also I began making my homepage by chosing the bootstrap template and implementi
 
 ### Day 3 
 I processed a part of the tourism data in python. I decided to not transform my data to a ready to use JSON in python but to alter it a bit in javascript aswel, so I can combine it with the temperature data. The structure I will be making will start with a year object, then as value the countries objects with the needed data inside.
+
+### Day 4
+During the standup I got the tip to search the internet a bit more for the average temperature values, since my data has a very complicated structure, and we suspected that somewhere on the internet there will be a dataset with the information I need which is easier to use. 

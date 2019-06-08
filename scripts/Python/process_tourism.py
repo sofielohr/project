@@ -33,8 +33,10 @@ data['Value'] = data['Value'].apply(clean)
 # make Year column
 data['Year'] = data['TIME'].str[0:4]
 
+print(data)
+
 # export to json
-export = data.to_json('../../data/' + OUTPUT_FILE, orient='records')
+# export = data.to_json('../../data/' + OUTPUT_FILE, orient='records')
 
 
 

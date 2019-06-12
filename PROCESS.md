@@ -15,3 +15,11 @@ I processed a part of the tourism data in python. I decided to not transform my 
 
 ### Day 4
 During the standup I got the tip to search the internet a bit more for the average temperature values, since my data has a very complicated structure, and we suspected that somewhere on the internet there will be a dataset with the information I need which is easier to use. 
+
+### Day 5
+I tried to search voor datasets with average temperature in an easier way to process, but could not find any reliable one. I started processing the data by looping over all the files and calculating the average. I still have to combine the different weather stations by country using the stations.txt file. 
+
+### Day 6
+In de standup kreeg ik een tip om niet met loops de station data aan de countries te koppelen maar dit met merge functie van pandas te doen, die ik zelf nog nooit had gebruikt. Dit gaat veel sneller wat erg handig is voor de grote van de dataset die ik heb.
+
+Ik ben halverwege de dag ziek geworden en ben heb 2 dagen ziek op bed gelegen. Ik zal dit in het weekend inhalen.

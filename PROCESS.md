@@ -22,4 +22,9 @@ I tried to search voor datasets with average temperature in an easier way to pro
 ### Day 6
 In de standup kreeg ik een tip om niet met loops de station data aan de countries te koppelen maar dit met merge functie van pandas te doen, die ik zelf nog nooit had gebruikt. Dit gaat veel sneller wat erg handig is voor de grote van de dataset die ik heb.
 
-Ik ben halverwege de dag ziek geworden en ben heb 2 dagen ziek op bed gelegen. Ik zal dit in het weekend inhalen.
+Ik ben halverwege de dag ziek geworden en ben heb 3 dagen ziek op bed gelegen. Ik zal dit in het weekend inhalen.
+
+
+
+###
+https://www.d3-graph-gallery.com/graph/bubble_legend.html

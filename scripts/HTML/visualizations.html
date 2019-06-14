@@ -4,15 +4,24 @@
   <title>Project January</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Import D3 V5 and d3tip-->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://unpkg.com/d3-simple-slider"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <script>
+      d3v5 = d3;
+      window.d3 = null;
+  </script>
+
+  <!-- Import Bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <style>
-  .fakeimg {
-    height: 200px;
-    background: #aaa;
-  }
-  </style>
+  
+  <!-- Import script-->
+  <script src="main.js"></script>
+  <script src="bubblechart.js"></script>
 </head>
 <body>
 
@@ -41,10 +50,14 @@
   <p>Resize this responsive page to see the effect!</p> 
 </div>
 
+
 <div class="container">
   <div class="row">
     <h2>Bubble chart</h2>
     <h5>Tourism and climate</h5>
+    <div class="col-sm-2"><p id="value-time"></p></div>
+    <div class="col-sm-12"><div id="slider-time"></div>
+    <div id="bubble"></div>
     <!-- Button trigger modal-->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRelatedContent">Pop up</button>
   </div>

@@ -7,14 +7,22 @@ import pandas as pd
 import sys
 import os
 
+OUTPUT_FILE = 'climate_data.json'
+OUTPUT_FILE_YEAR = 'climate_year_data.json'
+
+
 def load_data():
 
-	directory = '../../data/ECA_blend_tg1/'
+	directory = '../../data/ECA_blend_tg/'
 	
 	data_complete = pd.DataFrame()
+	count = 0
 
 	for file in os.listdir(directory):
 		filename = os.fsdecode(file)
+		count += 1
+		print(filename)
+		print(count)
 		if filename == 'stations.txt':
 			path = os.path.join(directory, filename)
 			stations = pd.read_csv(path, skiprows=[i for i in range(16)], sep=',', skipinitialspace=True)
@@ -44,8 +52,17 @@ def load_data():
 	# calculate per country the average of the different weather stations
 	data_complete = combine_countries(data_complete)
 
-	return data
+	# add country name
+	data_complete = country_name(data_complete)
 
+	# process 
+	data_complete['Year'] = data_complete['YearMonth'].str[0:4].astype(int)
+	data_complete['Month'] = data_complete['YearMonth'].str[4:6].astype(int)
+
+	# create yearly data
+	data_complete_year = yearly(data_complete)
+
+	return data_complete, data_complete_year
 
 
 def process_file(data):
@@ -78,17 +95,50 @@ def calculations(data):
 
 	return data
 
+def yearly(data):
+	temp = pd.DataFrame()
+	
+	for jaar in data['Year'].unique():
+		for land in data['CN'].unique():
+			jaar_data = data[data['Year'] == jaar]
+			land_data = jaar_data[jaar_data['CN'] == land]
+			land_data['Average'] = land_data['Average'].mean()
+			temp = pd.concat([temp,land_data['Average']], axis=0)
+
+	data['Average'] = temp
+	data = data[data['Month'] == 1]
+
+	# delete columns 'Day', 'Q_TG', 'SOUID', 'YearMonth' and 'TG'
+	data = data.drop(labels=['Month', 'YearMonth'], axis=1)
+
+	return data
+
 def combine_countries(data_complete):
 	
 	data_complete = data_complete.groupby(['CN', 'YearMonth']).mean()[['Average']]
 	# data_complete['Country_Average'] = data_complete[['Average']].mean(axis=1)
-	print(data_complete)
+	data_complete = data_complete.reset_index()
+
 	return data_complete
+
+def country_name(data_complete):
+
+	countries = pd.read_csv('../../data/country_names.csv', sep=',')
+	countries = countries.rename(columns={'Code':'CN'})
+	
+	data_complete = pd.merge(data_complete, countries, on='CN', how='left')
+
+	return data_complete
+
 
 if __name__ == "__main__":
 	
 	# load data
-	data = load_data()
+	data_complete, data_complete_year = load_data()
 
 	# export to json
-	# export = data.to_json('../../data/' + OUTPUT_FILE, orient='records')
+	# export = data_complete.to_json('../../data/' + OUTPUT_FILE, orient='records')
+	# export = data_complete_year.to_json('../../data/' + OUTPUT_FILE_YEAR, orient='records')
+
+
+

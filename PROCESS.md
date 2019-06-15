@@ -20,11 +20,26 @@ During the standup I got the tip to search the internet a bit more for the avera
 I tried to search voor datasets with average temperature in an easier way to process, but could not find any reliable one. I started processing the data by looping over all the files and calculating the average. I still have to combine the different weather stations by country using the stations.txt file. 
 
 ### Day 6
-In de standup kreeg ik een tip om niet met loops de station data aan de countries te koppelen maar dit met merge functie van pandas te doen, die ik zelf nog nooit had gebruikt. Dit gaat veel sneller wat erg handig is voor de grote van de dataset die ik heb.
+In de standup kreeg ik een tip om niet met loops de station data aan de countries te koppelen maar dit met merge functie van pandas te doen, die ik zelf nog nooit had gebruikt. Dit gaat veel sneller wat erg handig is voor de grootte van de dataset die ik heb.
 
-Ik ben halverwege de dag ziek geworden en ben heb 3 dagen ziek op bed gelegen. Ik zal dit in het weekend inhalen.
+Ik ben halverwege de dag ziek geworden en ben heb daarna 2 dagen ziek op bed gelegen. Ik zal dit in het weekend inhalen.
 
+### Day 7
+Today I implemented the bubble chart and I decided to use a time slider as interactive element. The climate colors are not yet implemented but I first have to process that data a bit more (it's very difficult). Since we have to finish the alpha version this week and I have missed 2.5 days, I first focussed on the graphs I could do without the climate data (like the bubble chart). 
 
+### Day 8
+Everytime I processed the data for a graph, I found out the format of the data has to be in a special way to implement the graph. For example for the bubble chart you had to specify children and put the data in a list. For the dual axis line chart I'm still trying to find out what they do in the example and how I can implement this in the best way to also link the figures. I think this is a difficult part of the implementation and it takes me a bit longer than expected. 
 
 ###
 https://www.d3-graph-gallery.com/graph/bubble_legend.html
+https://observablehq.com/@d3/bubble-chart
+https://me.chjiyun.com/2018/04/15/Interactive-Bubble-Chart/
+https://www.jonopens.com/blog/testing-d3-bubble-chart.html
+https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
+https://bl.ocks.org/alokkshukla/3d6be4be0ef9f6977ec6718b2916d168
+
+
+
+#### Country codes with country name
+https://datahub.io/core/country-list#data
+

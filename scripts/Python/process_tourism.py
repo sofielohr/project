@@ -9,7 +9,8 @@ import sys
 import os
 
 INPUT_FILE = 'tour_occ_arm_1_Data.csv'
-OUTPUT_FILE = 'tourism_year_data.json'
+OUTPUT_FILE = 'tourism_data.json'
+OUTPUT_FILE_YEAR = 'tourism_year_data.json'
 
 def process(data):
 	
@@ -33,9 +34,15 @@ def process(data):
 	data['Value'] = data['Value'].apply(clean)
 
 	# make Year column
-	data['Year'] = data['TIME'].str[0:4]
-	data['Month'] = data['TIME'].str[5:7]
+	data['Year'] = data['TIME'].str[0:4].astype(int)
+	data = data[data['Year'] < 2019]
+	data['Month'] = data['TIME'].str[5:7].astype(int)
 
+	data_year = year_data(data)
+
+	return data, data_year
+
+def year_data(data):
 	# calculate year average
 	temp = pd.DataFrame()
 	
@@ -47,13 +54,12 @@ def process(data):
 			temp = pd.concat([temp,land_data['Average']], axis=0)
 
 	data['Average'] = temp
-	data = data[data['Month'] == '01']
+	data = data[data['Month'] == 1]
 
 	# delete columns 'Day', 'Q_TG', 'SOUID', 'YearMonth' and 'TG'
 	data = data.drop(labels=['TIME', 'Month'], axis=1)
 
-	return (data)
-
+	return data
 
 
 if __name__ == "__main__":
@@ -61,9 +67,13 @@ if __name__ == "__main__":
 	# load data
 	data = pd.read_csv('../../data/tour_occ_arm/' + INPUT_FILE)
 
-	data = process(data)
+	data, data_year = process(data)
+
+	print(data)
+	print(data_year)
 
 	# export to json
 	export = data.to_json('../../data/' + OUTPUT_FILE, orient='records')
+	export = data_year.to_json('../../data/' + OUTPUT_FILE_YEAR, orient='records')
 
 

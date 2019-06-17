@@ -13,7 +13,7 @@ OUTPUT_FILE_YEAR = 'climate_year_data.json'
 
 def load_data():
 
-	directory = '../../data/ECA_blend_tg/'
+	directory = '../../data/ECA_blend_tg1/'
 	
 	data_complete = pd.DataFrame()
 	count = 0
@@ -90,6 +90,7 @@ def calculations(data):
 	data['Average'] = temp
 	data = data[data['Day'] == '01']
 
+	print(data)
 	# delete columns 'Day', 'Q_TG', 'SOUID', 'YearMonth' and 'TG'
 	data = data.drop(labels=['Day', 'Q_TG', 'SOUID', 'TG'], axis=1)	
 
@@ -116,6 +117,7 @@ def yearly(data):
 def combine_countries(data_complete):
 	
 	data_complete = data_complete.groupby(['CN', 'YearMonth']).mean()[['Average']]
+	print(data_complete)
 	# data_complete['Country_Average'] = data_complete[['Average']].mean(axis=1)
 	data_complete = data_complete.reset_index()
 
@@ -135,6 +137,8 @@ if __name__ == "__main__":
 	
 	# load data
 	data_complete, data_complete_year = load_data()
+
+	print(data_complete[data_complete['CN']=='SE'])
 
 	# export to json
 	# export = data_complete.to_json('../../data/' + OUTPUT_FILE, orient='records')

@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
 	data, data_year = process(data)
 
-	print(data)
+	print(data.head(100))
 	print(data_year)
 
 	# export to json

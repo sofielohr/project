@@ -46,7 +46,6 @@ function process_bubble(data){
 
   var data = {'children':tourism}
   return data
-  console.log(data)
 }
 
 function bubble(data){

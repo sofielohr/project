@@ -14,10 +14,15 @@ window.onload = function() {
     slider(bubble_data)
 
     // line chart
+    country = "France"
+    year = 2011
     var data_linegraph = line_data(response[1], response[3])
+    line(data_linegraph, country, year)
+
+    var data_piechart = piechart()
   
-  }).catch(function(e){
-    throw(e);
+  // }).catch(function(e){
+  //   throw(e);
   })
 
 

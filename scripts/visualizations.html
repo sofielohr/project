@@ -23,6 +23,7 @@
   <script src="Javascript/main.js"></script>
   <script src="Javascript/bubblechart.js"></script>
   <script src="Javascript/linechart.js"></script>
+  <script src="Javascript/piechart.js"></script>
 </head>
 <body>
 
@@ -64,10 +65,16 @@
   </div>
   </div>
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8" id="line">
       <h2>Line chart</h2>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-4" id="pie">
+       <div id="chart-area">
+        <form>
+            <label><input type="radio" name="dataset" value="apples" checked> Apples</label>
+            <label><input type="radio" name="dataset" value="oranges"> Oranges</label>
+        </form>        
+    </div>
       <h2>Pie chart</h2>
     </div>
   </div>

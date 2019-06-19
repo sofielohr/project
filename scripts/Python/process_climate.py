@@ -6,6 +6,7 @@ Script to sort and calculate differences
 import pandas as pd
 import sys
 import os
+import copy
 
 OUTPUT_FILE = 'climate_data.json'
 OUTPUT_FILE_YEAR = 'climate_year_data.json'
@@ -13,7 +14,7 @@ OUTPUT_FILE_YEAR = 'climate_year_data.json'
 
 def load_data():
 
-	directory = '../../data/ECA_blend_tg1/'
+	directory = '../../data/ECA_blend_tg/'
 	
 	data_complete = pd.DataFrame()
 	count = 0
@@ -41,7 +42,7 @@ def load_data():
 			if not data.empty:
 
 				# calculate the average per month and only keep 1 row per month (instead of 28/30/31)
-				data = calculations(data)
+				data = monthly(data)
 
 				# add data to the complete dataset
 				data_complete = data_complete.append(data)
@@ -60,7 +61,8 @@ def load_data():
 	data_complete['Month'] = data_complete['YearMonth'].str[4:6].astype(int)
 
 	# create yearly data
-	data_complete_year = yearly(data_complete)
+	data_complete_year = copy.copy(data_complete)
+	data_complete_year = yearly(data_complete_year)
 
 	return data_complete, data_complete_year
 
@@ -78,11 +80,10 @@ def process_file(data):
 	data = data[data['Q_TG'] != 9]
 	return data
 
-def calculations(data):
+def monthly(data):
 	temp = pd.DataFrame()
 	
-	for maand in data['YearMonth'].unique():
-		
+	for maand in data['YearMonth'].unique():	
 		maand_data = data[data['YearMonth'] == maand]
 		maand_data['Average'] = maand_data['TG'].mean()/10
 		temp = pd.concat([temp,maand_data['Average']], axis=0)
@@ -90,7 +91,6 @@ def calculations(data):
 	data['Average'] = temp
 	data = data[data['Day'] == '01']
 
-	print(data)
 	# delete columns 'Day', 'Q_TG', 'SOUID', 'YearMonth' and 'TG'
 	data = data.drop(labels=['Day', 'Q_TG', 'SOUID', 'TG'], axis=1)	
 
@@ -116,11 +116,10 @@ def yearly(data):
 
 def combine_countries(data_complete):
 	
-	data_complete = data_complete.groupby(['CN', 'YearMonth']).mean()[['Average']]
-	print(data_complete)
+	data_complete = data_complete.groupby(['CN', 'YearMonth']).mean()['Average']
 	# data_complete['Country_Average'] = data_complete[['Average']].mean(axis=1)
 	data_complete = data_complete.reset_index()
-
+		
 	return data_complete
 
 def country_name(data_complete):
@@ -138,11 +137,9 @@ if __name__ == "__main__":
 	# load data
 	data_complete, data_complete_year = load_data()
 
-	print(data_complete[data_complete['CN']=='SE'])
-
 	# export to json
-	# export = data_complete.to_json('../../data/' + OUTPUT_FILE, orient='records')
-	# export = data_complete_year.to_json('../../data/' + OUTPUT_FILE_YEAR, orient='records')
+	export = data_complete.to_json('../../data/' + OUTPUT_FILE, orient='records')
+	export = data_complete_year.to_json('../../data/' + OUTPUT_FILE_YEAR, orient='records')
 
 
 

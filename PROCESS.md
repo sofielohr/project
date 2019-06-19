@@ -31,7 +31,7 @@ Today I implemented the bubble chart and I decided to use a time slider as inter
 Everytime I processed the data for a graph, I found out the format of the data has to be in a special way to implement the graph. For example for the bubble chart you had to specify children and put the data in a list. For the dual axis line chart I'm still trying to find out what they do in the example and how I can implement this in the best way to also link the figures. I think this is a difficult part of the implementation and it takes me a bit longer than expected. 
 
 ### Day 9
-Today I programmed all my graphs. At the end of the day I found out that the processing of the data for the line graph (tourism variable) did not go right. The values of all the months in one year are the same so the line is straight. Also the piechart data has to be formatted differently to make the circle work, so both these things I have to fix tomorrow. 
+Today I programmed all my graphs. At the end of the day I found out that the processing of the data for the line graph (tourism variable) did not go right. The values of all the months in one year are the same so the line is straight. Also the piechart data has to be formatted differently to make the circle work, so both these things I have to fix tomorrow. Since I struggled with my data a lot, I got a tip in the standup from Maria that I should implement exactly the graph from the example (with their data) first and make it work. This way you can see how they give the data to the graph (with console.log) and format the data in the same way. 
 
 ###
 https://www.d3-graph-gallery.com/graph/bubble_legend.html

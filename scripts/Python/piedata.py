@@ -8,8 +8,7 @@ import numpy as np
 import sys
 import os
 
-INPUT_FILE_1 = 'tour_dem_ttw_1_Data.csv'
-# INPUT_FILE_2 = 'tour_dem_ttw_1_Data.csv'
+INPUT_FILE = 'tour_dem_ttw_1_Data.csv'
 OUTPUT_FILE = 'pie_data.json'
 
 def process(data):
@@ -42,7 +41,7 @@ def process(data):
 if __name__ == "__main__":
 	
 	# load data
-	data = pd.read_csv('../../data/tour_dem_ttw/' + INPUT_FILE_1)
+	data = pd.read_csv('../../data/tour_dem_ttw/' + INPUT_FILE)
 
 	data = process(data)
 

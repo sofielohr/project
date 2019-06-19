@@ -51,51 +51,6 @@ function line_data(tourism, climate){
 		}      
 	})
 
-	// // make objects for all the years
-	// for (index in years){
-	// 	var Year = years[index]
-	// 	data[Year] = {};
-
-	// 	// go over all the countries
-	// 	Object.values(tourism).forEach(function(d){
-
-	// 		// check if right year and make objects
-	// 		if (d["Year"] == Year){
-
-	// 			if (d["GEO"] in data[Year]){
-
-	// 				var country_variables = {}
-	// 				country_variables.month = d.Month
-	// 				country_variables.tourism = d.Average
-	// 				country_variables.country = d.GEO
-	// 				country_variables.date = d.Month + "-" + d.Year
-
-	// 				// add to the dataframe
-	// 				data[Year][d.GEO][d.Month] = country_variables
-
-	// 			}
-	// 			else {
-
-	// 				data[Year][d.GEO] = {}
-
-	// 				var country_variables = {}
-	// 				country_variables.month = d.Month
-	// 				country_variables.tourism = d.Average
-	// 				country_variables.country = d.GEO
-	// 				if (d.Month < 10){
-	// 					country_variables.date = "0" + d.Month + "-" + d.Year
-	// 				}
-	// 				else{
-	// 					country_variables.date = d.Month + "-" + d.Year
-	// 				}
-
-	// 				// add to the dataframe
-	// 				data[Year][d.GEO][d.Month] = country_variables
-	// 			}      
-	// 		}
-	// 	})
-	// }
-
 	// add climate data
 	Object.values(climate).forEach(function(d){
 		
@@ -113,8 +68,8 @@ function line_data(tourism, climate){
 function line(data, country, year){
 
 	var margin = {top: 20, right: 40, bottom: 30, left: 50},
-		width = 960 - margin.left - margin.right,
-		height = 500 - margin.top - margin.bottom;
+		width = 600 - margin.left - margin.right,
+		height = 350 - margin.top - margin.bottom;
 
 	// parse the date / time
 	var parseTime = d3v5.timeParse("%m-%Y");

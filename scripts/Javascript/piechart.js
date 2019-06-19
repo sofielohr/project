@@ -1,8 +1,6 @@
 // Sofie Löhr, 11038926
 
 function piechart_data(outgoing, incoming){
-	console.log(outgoing)
-    console.log(incoming)
 
     var data = {}
     var years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
@@ -68,7 +66,6 @@ function piechart_data(outgoing, incoming){
         }
         // console.log(data[d.TIME][d.GEO].outgoing)
     })
-    console.log(data)
     return data
 
 }
@@ -111,13 +108,12 @@ function piechart(data, country, year){
     }
   
     d3v5.selectAll("input")
-        .on("change", update);
+        .on("change", update_pie);
 
-    function update(val = this.value) {
+    function update_pie(val = this.value) {
         // Join new data
         const path = svg.selectAll("path")
             .data(pie(data[val]));
-        console.log(pie(data[val]))
 
         // Update existing arcs
         path.transition().duration(200).attrTween("d", arcTween);
@@ -131,7 +127,7 @@ function piechart(data, country, year){
             .each(function(d) { this._current = d; });
     }
 
-    update("incoming");
+    update_pie("incoming");
 
 	// // legend
 	// var legend = svg1.selectAll(".legend")

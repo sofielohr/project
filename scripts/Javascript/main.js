@@ -10,12 +10,13 @@ window.onload = function() {
 
   	// process tourism data
     var tourism_data = process(response[0], response[2]);
-    console.log(tourism_data)
     // var bubble_data = process_bubble(tourism_data);
 
     // create bubble chart & slider
-    bubble(tourism_data[year])
+    // bubble(tourism_data[year])
     slider(tourism_data)
+
+    bubble_update_internet(tourism_data[year])
 
     // line chart
     var data_linegraph = line_data(response[1], response[3])

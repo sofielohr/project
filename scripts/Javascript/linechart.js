@@ -147,6 +147,23 @@ function line(data, country, year){
 
 };
 
+function update_line(val) {
+        // Join new data
+        console.log(val)
+        const path = svg.selectAll("path")
+            .data();
+
+        // Update existing arcs
+        path.transition().duration(200).attrTween("d", arcTween);
+
+        // Enter new arcs
+        path.enter().append("path")
+            .attr("fill", (d, i) => color(i))
+            .attr("d", arc)
+            .attr("stroke", "white")
+            .attr("stroke-width", "0.5px")
+            .each(function(d) { this._current = d; });
+    }
 
 
 

@@ -8,6 +8,7 @@
   <!-- Import D3 V5 and d3tip-->
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/d3-simple-slider"></script>
+  <script src="https://unpkg.com/jeezy@1.11.2/lib/jeezy.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
   <script>
       d3v5 = d3;
@@ -55,14 +56,11 @@
 
 <div class="container">
   <div class="row">
-    <h2>Bubble chart</h2>
-    <h5>Tourism and climate</h5>
-    <div class="col-sm-2"><p id="value-time"></p></div>
-    <div class="col-sm-12"><div id="slider-time"></div>
-    <div class="col-sm-12" id="bubble"></div>
+    <!-- <div class="col-sm-2"><p id="value-time"></p></div> -->
+    <div class="col-sm-4"><h2>Bubble chart</h2><div id="slider-time"></div></div>
+    <div class="col-sm-8" id="bubble"></div>
     <!-- Button trigger modal-->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRelatedContent">Pop up</button>
-  </div>
   </div>
   <div class="row">
     <div class="col-sm-8" id="line">

@@ -33,6 +33,9 @@ Everytime I processed the data for a graph, I found out the format of the data h
 ### Day 9
 Today I programmed all my graphs. At the end of the day I found out that the processing of the data for the line graph (tourism variable) did not go right. The values of all the months in one year are the same so the line is straight. Also the piechart data has to be formatted differently to make the circle work, so both these things I have to fix tomorrow. Since I struggled with my data a lot, I got a tip in the standup from Maria that I should implement exactly the graph from the example (with their data) first and make it work. This way you can see how they give the data to the graph (with console.log) and format the data in the same way. 
 
+### Day 10
+All the graphs are (almost) the way they should be now. The only thing I still have to implement is the linked views. I started with this but I don't really get how you can give the line and pie data (and right year/country) to the function that makes the line and pie chart inside the on("click"). I also made the bubble chart move when it updates to another country. I want a country to move to another place when the year is updated instead of going away and coming back with the new value. I don't know why this is not working because I think it is sort of implemented in the script. 
+
 ###
 https://www.d3-graph-gallery.com/graph/bubble_legend.html
 https://observablehq.com/@d3/bubble-chart

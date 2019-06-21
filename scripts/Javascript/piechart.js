@@ -73,19 +73,19 @@ function piechart_data(outgoing, incoming){
 function piechart(data, country, year){
     data = data[year][country]
 
-	const width = 300;
+	const width = 400;
     const height = 300;
-    const radius = Math.min(width, height) / 2;
+    const radius = Math.min(width, height) / 2 - 40;
 
-    const svg = d3v5.select("#pie")
+    const svg = d3v5.select("#pie-area")
         .append("svg")
             .attr("width", width)
             .attr("height", height)
         .append("g")
-            .attr("transform", `translate(${width / 2}, ${height / 2})`);
+            .attr("transform", `translate(${width / 2 - 80}, ${height / 2 + 10})`);
 
-    const color = d3v5.scaleOrdinal().domain(function(d){return data.country})
-        .range(d3v5.schemeSet3)
+    const color = d3v5.scaleOrdinal().domain(function(d){console.log(d); return d.country})
+        .range(["#383645", "#faebd7"])
 
     const pie = d3v5.pie()
         .value(d => d.count)
@@ -108,9 +108,9 @@ function piechart(data, country, year){
     }
   
     d3v5.selectAll("input")
-        .on("change", update_pie);
+        .on("change", interactive_pie);
 
-    function update_pie(val = this.value) {
+    function interactive_pie(val = this.value) {
         // Join new data
         const path = svg.selectAll("path")
             .data(pie(data[val]));
@@ -127,7 +127,38 @@ function piechart(data, country, year){
             .each(function(d) { this._current = d; });
     }
 
-    update_pie("incoming");
+    interactive_pie("incoming");
+
+    // set legend dimensions
+    var legendRectSize = 25
+    var legendSpacing = 3
+
+
+    // legend
+    var legend = svg.selectAll(".legend")
+        .data(color.domain())
+        .enter()
+        .append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d,i){
+            var height = legendRectSize + legendSpacing
+            var offset = height * color.domain().length / 2
+            var horz = 5 * legendRectSize
+            var vert = i * height - offset
+            return "translate(" + horz + "," + (vert - 16) + ")";
+        })
+
+    legend.append("rect")
+        .attr("width", legendRectSize)
+        .attr("height", legendRectSize)
+        .style("fill", color)
+        .style("stroke", color)
+    
+    // legend.append("text")
+    //     .data(input)
+    //     .attr("x", legendRectSize + 2 * legendSpacing)
+    //     .attr("y", legendRectSize - 2 * legendSpacing)
+    //     .text(function(d){ return d.label; })
 
 	// // legend
 	// var legend = svg1.selectAll(".legend")

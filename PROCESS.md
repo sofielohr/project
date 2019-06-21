@@ -36,6 +36,13 @@ Today I programmed all my graphs. At the end of the day I found out that the pro
 ### Day 10
 All the graphs are (almost) the way they should be now. The only thing I still have to implement is the linked views. I started with this but I don't really get how you can give the line and pie data (and right year/country) to the function that makes the line and pie chart inside the on("click"). I also made the bubble chart move when it updates to another country. I want a country to move to another place when the year is updated instead of going away and coming back with the new value. I don't know why this is not working because I think it is sort of implemented in the script. 
 
+### Day 11
+I implemented the linked views but it's not in a pretty way now. First the timeslider gets made and fromn there the bubblechart is made (which also gets all the data). Then the other 2 graphs are made in main, but updated in the bubble chart. All the updating is now done by deleting and adding, so this has to be changed. Also I found out the color function is not working as it should be because the colors are not getting more red (warmer) when the temperature is higher so I have to figure out where this is going wrong. I added a screenshot of the site at this moment. 
+
+![screen1](doc/update1.png)
+![screen2](doc/update2.png) 
+
+
 ###
 https://www.d3-graph-gallery.com/graph/bubble_legend.html
 https://observablehq.com/@d3/bubble-chart

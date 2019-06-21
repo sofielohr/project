@@ -57,22 +57,23 @@
 <div class="container">
   <div class="row">
     <!-- <div class="col-sm-2"><p id="value-time"></p></div> -->
-    <div class="col-sm-4"><h2>Bubble chart</h2><div id="slider-time"></div></div>
+    <div class="col-sm-4"><h2>Bubble chart</h2><div id="slider-time"></div>
+    <div id="bubble-color-legend"></div><div id="bubble-circle-legend"></div>
+  </div>
     <div class="col-sm-8" id="bubble"></div>
-    <!-- Button trigger modal-->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRelatedContent">Pop up</button>
   </div>
   <div class="row">
     <div class="col-sm-8" id="line">
       <h2>Line chart</h2>
-    </div>
+      <div id="line-area">
+    </div></div>
     <div class="col-sm-4" id="pie">
       <h2>Pie chart</h2>
-       <div id="chart-area">
-        <form>
+      <form>
             <label><input type="radio" name="dataset" value="incoming" checked> Incoming</label>
             <label><input type="radio" name="dataset" value="outgoing"> Outgoing</label>
         </form>        
+       <div id="pie-area">
     </div>
     </div>
   </div>
@@ -90,40 +91,6 @@
 			<br>
 </div>
 
-
-
-<!--Modal: modalRelatedContent-->
-<div class="modal fade right" id="modalRelatedContent" tabindex="-1" role="dialog"
-  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-  <div class="modal-dialog modal-fluid modal-bottom-right modal-notify modal-info" role="document">
-    <!--Content-->
-    <div class="modal-content">
-      <!--Header-->
-      <div class="modal-header">
-        <p class="heading">Pop up window: pie and line chart</p>
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" class="white-text">&times;</span>
-        </button>
-      </div>
-
-      <!--Body-->
-      <div class="modal-body">
-
-        <div class="row">
-          <div class="col-7">
-            <p><strong>My travel to paradise</strong></p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit [...]</p>
-            <button type="button" class="btn btn-info btn-md">Read more</button>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--/.Content-->
-  </div>
-</div>
-<!--Modal: modalRelatedContent-->
 </body>
 </html>
 

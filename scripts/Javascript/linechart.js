@@ -61,13 +61,12 @@ function line_data(tourism, climate){
 		}
 	})
 
-	console.log(data)
 	return data
 }
 
 function line(data, country, year){
 
-	var margin = {top: 20, right: 40, bottom: 30, left: 50},
+	var margin = {top: 35, right: 50, bottom: 35, left: 50},
 		width = 600 - margin.left - margin.right,
 		height = 350 - margin.top - margin.bottom;
 
@@ -94,7 +93,7 @@ function line(data, country, year){
 	// append the svg obgect to the body of the page
 	// appends a 'group' element to 'svg'
 	// moves the 'group' element to the top left margin
-	var svg = d3v5.select("#line").append("svg")
+	var svg = d3v5.select("#line-area").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
@@ -106,18 +105,18 @@ function line(data, country, year){
 	for (m in data){
 		data_line.push(data[m])
 	}
-	console.log(data_line)
 
 	// Scale the range of the data
 	x.domain(d3v5.extent(data_line, function(d) {return parseTime(d.date); }));
 	y0.domain([0, d3v5.max(data_line, function(d) {return Math.max(d.tourism);})]);
-	y1.domain([0, d3v5.max(data_line, function(d) {return Math.max(d.temperature); })]);
+	y1.domain([d3v5.min(data_line, function(d) {return Math.min(d.temperature); }), d3v5.max(data_line, function(d) {return Math.max(d.temperature); })]);
 
 	// Add the valueline path.
 	svg.append("path")
 		.data([data_line])
 		.attr("class", "line")
-		.style("stroke", "steelblue")
+		.style("stroke", "#708090")
+		.style("stroke-width", 3)
 		.style("fill", "none")
 		.attr("d", valueline);
 
@@ -125,7 +124,8 @@ function line(data, country, year){
 	svg.append("path")
 		.data([data_line])
 		.attr("class", "line")
-		.style("stroke", "red")
+		.style("stroke", "	#800000")
+		.style("stroke-width", 3)
 		.style("fill", "none")
 		.attr("d", valueline2);
 
@@ -145,16 +145,67 @@ function line(data, country, year){
 		.attr("transform", "translate( " + width + ", 0 )")
 		.call(d3v5.axisRight(y1));
 
+
+	// Add x label
+    svg.append('text')
+       .attr('class', 'title')
+       .attr("font-weight", "bold")
+       .attr('x', width / 2)
+       .attr('y', height + margin.bottom)
+       .attr('text-anchor', 'middle')
+       .text('Month');
+
+    // Add y labels
+    svg.append('g').attr("class", "variable")
+       .append('text')
+       .attr("font-weight", "bold")
+       .attr("transform", "rotate(-90)")
+       .attr('x', - (height / 2))
+       .attr('y', - margin.left + 10)
+       .attr('text-anchor', 'middle')
+       .text("Tourism");
+
+   svg.append('g').attr("class", "variable")
+       .append('text')
+       .attr("font-weight", "bold")
+       .attr("transform", "rotate(-90)")
+       .attr('x', - (height / 2))
+       .attr('y', width + margin.right - 10)
+       .attr('text-anchor', 'middle')
+       .text("Temperature");
+
+    // Add title
+    svg.append('text')
+       .attr('class', 'title')
+       .attr("font-size", "14px")
+       .attr("font-weight", "bold")
+       .attr('x', width / 2)
+       .attr('y', -10)
+       .attr('text-anchor', 'middle')
+       .text('Relationship health spendings and ');
+
+   // Add scale tourism axis
+    svg.append('text')
+       .attr('class', 'title')
+       .attr("font-size", "10px")
+       .attr('x', 10)
+       .attr('y', -5)
+       .attr('text-anchor', 'middle')
+       .text('x mln.');
+
+
 };
 
-function update_line(val) {
-        // Join new data
-        console.log(val)
-        const path = svg.selectAll("path")
-            .data();
+function update_line(data, year, val) {
+        
+        // Set new data
+        country = val.data.name
+
+        const path = d3v5.select(".line").selectAll("path")
+            .data(data);
 
         // Update existing arcs
-        path.transition().duration(200).attrTween("d", arcTween);
+        // path.transition().duration(200);
 
         // Enter new arcs
         path.enter().append("path")
@@ -164,8 +215,6 @@ function update_line(val) {
             .attr("stroke-width", "0.5px")
             .each(function(d) { this._current = d; });
     }
-
-
 
 
 

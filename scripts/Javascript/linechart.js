@@ -217,7 +217,6 @@ function update_line(data, year, country) {
 
 	// parse the date / time
 	var parseTime = d3v5.timeParse("%m-%Y");
-	// var parseTime = d3v5.timeParse("%d-%b-%y");
 
 	// set the ranges
 	var x = d3v5.scaleTime().range([0, width]);

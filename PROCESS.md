@@ -42,6 +42,12 @@ I implemented the linked views but it's not in a pretty way now. First the times
 ![screen1](doc/update1.png)
 ![screen2](doc/update2.png) 
 
+#### Day 12
+I Implemented the update functions for the bubble chart and line chart but not correct yet. The bubble chart is now updating on top off the old bubble chart. I also added the legend for the size of the bubbles but not much else because I spend a lot of time on understanding the updates. 
+
+#### Day 13
+I figured out why the bubble chart was not updating: I was selecting and naming the wrong names so it did not remove or join. Also I added the update for the line chart axis and the update for the piechart, but this is not right yet. When clicking on a country, the chart updates to the default value "incoming", also when it's set to "outgoing". I tried to always set the tickbox to the default setting when updating but this is not working yet. 
+
 
 ###
 https://www.d3-graph-gallery.com/graph/bubble_legend.html

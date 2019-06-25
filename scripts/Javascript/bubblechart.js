@@ -35,6 +35,32 @@ function process(tourism_data, climate_data) {
     if (d.Year < 2019){
       data[d.Year].children.forEach(function(e){
         if (e.name == d.Name){
+
+                        // // calculate the fill category datamap
+                        // if (d.Average < 1){
+                        //   e.fillKey = "lowest"
+                        // }
+                        // else if (d.Average >= 1 && d.Average < 4){
+                        //   e.fillKey = "low"
+                        // }
+                        // else if (d.Average >= 4 && d.Average < 6){
+                        //   e.fillKey = "medium"
+                        // }
+                        // else if (d.Average >= 6 && d.Average < 8){
+                        //   e.fillKey = "high"
+                        // }
+                        // else if (d.Average >= 8 && d.Average < 10){
+                        //   e.fillKey = "higher"
+                        // }
+                        // else if (d.Average >= 8 && d.Average < 10){
+                        //   e.fillKey = "super high"
+                        // }
+                        // else if (d.Average >= 8 && d.Average < 10){
+                        //   e.fillKey = "super high"
+                        // }
+                        // else if (d.Average >= 9){
+                        //   e.fillKey = "ultra high"
+                        // }
           e.temperature = d.Average
         }
       })
@@ -44,59 +70,61 @@ function process(tourism_data, climate_data) {
   return data
 }
 
-function bubble(data){
+// function bubble(data){
 
-  // var diameter = data['2010'].reduce(function(d){ return d.Average})
-  var diameter = 600
-      // format = d3v5.format(",d"),
-  var color = d3v5.scaleOrdinal(['#e5f5f9','#99d8c9','#2ca25f']);
-  // var color = d3v5.scaleOrdinal(data.map(d => d.), d3v5.schemeCategory10)
+//   // var diameter = data['2010'].reduce(function(d){ return d.Average})
+//   var diameter = 600
+//       // format = d3v5.format(",d"),
+//   var color = d3v5.scaleThreshold()
+//     .domain([1, 4, 6, 8, 10, 12, 14, 16])
+//     .range(d3v5.schemeRdBu[9]);
+//   // var color = d3v5.scaleOrdinal(data.map(d => d.), d3v5.schemeCategory10)
 
-  // var simulation = d3v5.forceSimulation()
-  //   .force('name', definetheforce)
+//   // var simulation = d3v5.forceSimulation()
+//   //   .force('name', definetheforce)
 
-  var bubble = d3v5.pack(data)
-      .size([diameter, diameter])
-      .padding(1.5);
+//   var bubble = d3v5.pack(data)
+//       .size([diameter, diameter])
+//       .padding(1.5);
 
-  var svg = d3v5.select("#bubble")
-      .append("svg")
-      .attr("width", diameter)
-      .attr("height", diameter)
-      .attr("class", "bubble");
+//   var svg = d3v5.select("#bubble")
+//       .append("svg")
+//       .attr("width", diameter)
+//       .attr("height", diameter)
+//       .attr("class", "bubble");
 
-  // hierarchy
-  var nodes = d3v5.hierarchy(data)
-      .sum(function(d){ return d.size; })
+//   // hierarchy
+//   var nodes = d3v5.hierarchy(data)
+//       .sum(function(d){ return d.size; })
 
-  // JOIN
-  var node = svg.selectAll(".node")
-      .data(bubble(nodes).descendants())
-      .enter()
-      .filter(function(d){
-        return !d.children;
-      })
-      .append("g")
-      .attr("class", "node")
-      .attr("transform", function(d){ return "translate(" + d.x + "," + d.y + ")" })
+//   // JOIN
+//   var node = svg.selectAll(".node")
+//       .data(bubble(nodes).descendants())
+//       .enter()
+//       .filter(function(d){
+//         return !d.children;
+//       })
+//       .append("g")
+//       .attr("class", "node")
+//       .attr("transform", function(d){ return "translate(" + d.x + "," + d.y + ")" })
 
-  node.append("title")
-      .text(function(d){ return d.Country; })
+//   node.append("title")
+//       .text(function(d){ return d.Country; })
 
-  node.append("circle")
-      .attr("r", function(d){ return d.r})
-      .style("fill", function(d){ return color(d.temperature) })
+//   node.append("circle")
+//       .attr("r", function(d){ return d.r})
+//       .style("fill", function(d){ return color(d.temperature) })
 
-  d3v5.select(self.frameElement)
-      .style("height", diameter + "px")
+//   d3v5.select(self.frameElement)
+//       .style("height", diameter + "px")
 
-}
+// }
 
 function bubble_update_internet(data, year, data_line, data_pie){
   
   var diameter = 600
 
-  var svg = d3v5.select("#bubble").append("svg").attr("width", diameter).attr("height", diameter).attr("class", "bubble");
+  var svg = d3v5.select("#bubble").append("svg").attr("id", "bubbles").attr("width", diameter).attr("height", diameter).attr("class", "bubble");
 
   temp = []
   data[year]["children"].forEach(function(d){
@@ -108,124 +136,20 @@ function bubble_update_internet(data, year, data_line, data_pie){
   var min_temp = Math.min(...temp)
   var max_temp = Math.max(...temp)
 
-  var bubble = d3v5.pack(data[year])
-      .size([diameter, diameter])
-      .padding(1.5);
-
-  // // set color depending on temperature
-  // var color = d3v5.scaleOrdinal().domain([min_temp, max_temp])
-  //       .range(d3v5.schemeRdBu[9])
-
-  // set color depending on temperature
-  var color = d3v5.scaleOrdinal().domain(temp)
-        .range(d3v5.schemeRdBu[9])
-  console.log(color.domain())
-
-  redraw(data, year);
-
-  function redraw(data, year){
-
-    data = data[year]
-
-    // transition
-    var t = d3v5.transition()
-        .duration(700);
-
-    // hierarchy
-    var nodes = d3v5.hierarchy(data)
-        .sum(function(d) { return d.size; })
-
-    //JOIN
-    var circle = svg.selectAll(".node")
-        .data(bubble(nodes).leaves(), function(d){ return d.data.name; })
-
-    //EXIT
-    circle.exit()
-        .style("fill", function(d){ return color(d.data.temperature) })
-      .transition(t)
-        .attr("r", 1e-6)
-        .remove();
-
-    //UPDATE
-    circle
-      .transition(t)
-        .style("fill", function(d){ return color(d.data.temperature) })
-        .attr("r", function(d){ return d.r })
-        .attr("cx", function(d){ return d.x; })
-        .attr("cy", function(d){ return d.y; })
-
-    //ENTER
-    circle.enter()
-        .filter(function(d){
-          return !d.children;
-        })
-        .append("circle")
-        .on("click", function(d){ 
-          
-          $('#line-area').empty();
-          $('#pie-area').empty();
-
-          country = d.data.name
-
-          line(data_line, country, year)
-          piechart(data_pie, country, year)
-          
-          // update_line(data_line, year, d)
-        })
-        .attr("r", 1e-6)
-        .attr("cx", function(d){ return d.x; })
-        .attr("cy", function(d){ return d.y; })
-        .on("mouseover", function(d, i) {
-
-          tooltip.style("display", null);
-
-          d3v5.select(this)
-            .attr("stroke", '#383645')
-            .attr("stroke-width", 3 )
-            .attr("r", function(d){
-               return d.r
-        })})
-        .on("mousemove", function(d){
-          var x_pos = d3v5.mouse(this)[0] - 25
-          var y_pos = d3v5.mouse(this)[1] - 15
-          tooltip.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
-          tooltip.select("text").text(d.data.name)
-        })
-        .on("mouseout", function(d, i) {
-
-          tooltip.style("display", "none");
-
-          d3v5.select(this).attr("stroke", "none")
-             .attr("r", function(d){
-               return d.r
-             })
-        })
-      .transition(t)
-        .style("fill", function(d){
-          if (d.data.temperature == null){
-            return "#383645"
-          }
-          else {
-            return color(d.data.temperature)
-          }
-        })
-        .attr("r", function(d){ return d.r })
+  redraw(data, data_line, data_pie, year);
     
-// Add Tooltip
-   var tooltip = svg.append("g")
-
-   tooltip.append("text")
-      .style("class", "tooltip")
-
-    }  
   // Add legend
   var svg = d3v5.select("#bubble-color-legend").append("svg")
       .attr("transform", "translate(600,550)")
-      .call(legend)
+      .call(color_legend)
 
 
-function legend(g){
+function color_legend(g){
  
+  var color = d3v5.scaleThreshold()
+      .domain([1, 4, 6, 8, 10, 12, 14, 16])
+      .range(d3v5.schemeRdBu[9].reverse());
+
   var width = 280;
   const length = color.range().length;
 
@@ -233,36 +157,31 @@ function legend(g){
     .domain([1, length - 1])
     .rangeRound([width / length, width * (length - 1) / length]);
 
+  var g1 = g.append("g")
+    .attr("transform", "translate(0,20)")
 
-  g.selectAll("rect")
+  g1.selectAll("rect")
     .data(color.range())
     .join("rect")
     .attr("height", 8)
-    .attr("x", function(d, i){return x(length - 1 - i);})
+    .attr("x", function(d, i){return x(length - 1 - i) ;})
     .attr("width", function(d, i) {return (x(i + 1) - x(i)); })
     .attr("fill", function(d){return d;});
 
   g.append("text")
-    .attr("y", -6)
-    .attr("fill", "#383645")
+    .attr("x", 0)
+    .attr("y", 10)
     .attr("text-anchor", "start")
     .attr("font-weight", "bold")
+    .attr("fill", "black")
     .text("Temperature");
 
-  g.call(d3v5.axisBottom(x)
+  g1.call(d3v5.axisBottom(x)
     .tickSize(13)
-    .tickFormat(function(i) {return Math.round(color.domain()[i - 0])} )
+    .tickFormat(function(i) {return Math.round(color.domain()[i - 1])} )
     .tickValues(d3v5.range(1, length)))
     .select(".domain")
     .remove();
-
-  // title
-  var t = g.append("g").append("text")
-    .attr("transform", "translate(0,20)")
-    .style("text-anchor", "left")
-    .style("font-weight", "bold")
-    .style("font-size", "14pt")
-    .text("Temperature")
 
 }
 }
@@ -285,11 +204,9 @@ function slider(data, data_line, data_pie){
      .default(new Date(2010, 10, 3))
      .on('onchange', val => {
          var year = val.getFullYear()
-         // Remove old
-         $('#bubble').empty();
-         $('#bubble-legend').empty();
+         
          // Create new
-         bubble_update_internet(data, year, data_line, data_pie);
+         redraw(data, data_line, data_pie, year)
          d3v5.select('p#value-time').text(d3v5.timeFormat('%Y')(val));
      })
 
@@ -320,6 +237,7 @@ function circle_legend(){
   var width = 280
   var svg = d3v5.select("#bubble-circle-legend")
     .append("svg")
+    .attr("id", "bubble-circle-legend")
       .attr("width", width)
       .attr("height", height)
 
@@ -369,5 +287,129 @@ function circle_legend(){
       .text( function(d){ return d } )
       .style("font-size", 10)
       .attr('alignment-baseline', 'middle')
+
+  svg.append("text")
+    .attr("x", 0)
+    .attr("y", 10)
+    .attr("text-anchor", "start")
+    .attr("font-weight", "bold")
+    .attr("fill", "black")
+    .text("Tourism");
+}
+
+function redraw(data, data_line, data_pie, year){
+
+    var svg = d3v5.select("#bubbles")
+
+    var diameter = 600
+
+    var bubble = d3v5.pack(data[year])
+      .size([diameter, diameter])
+      .padding(1.5);
+
+    var color = d3v5.scaleThreshold()
+      .domain([1, 4, 6, 8, 10, 12, 14, 16])
+      .range(d3v5.schemeRdBu[9].reverse());
+
+    data = data[year]
+
+    // transition
+    var t = d3v5.transition()
+        .duration(700);
+
+    // hierarchy
+    var nodes = d3v5.hierarchy(data)
+        .sum(function(d) { return d.size; })
+
+    //JOIN
+    var circle = svg.selectAll("circle")
+        .data(bubble(nodes).leaves(), function(d){ return d.data.name; })
+
+    //EXIT
+    circle.exit()
+        .style("fill", "none")
+      .transition(t)
+        .attr("r", 1e-6)
+        .remove();
+
+    //UPDATE
+    circle
+      .transition(t)
+        .style("fill", function(d){
+          if (d.data.temperature == null){
+            return "#383645"
+          }
+          else {
+            console.log(color(d.data.temperature))
+            return color(d.data.temperature)
+          }
+        })
+        .attr("r", function(d){ return d.r })
+        .attr("cx", function(d){ return d.x; })
+        .attr("cy", function(d){ return d.y; })
+
+    //ENTER
+    circle.enter()
+        .filter(function(d){
+          return !d.children;
+        })
+        .append("circle")
+        .on("click", function(d){
+
+          country = d.data.name
+          var year = $('.slider .parameter-value text').html()
+
+          update_line(data_line, year, country)
+          update_pie(data_pie, year, country)
+        })
+        .attr("r", 1e-6)
+        .attr("cx", function(d){ return d.x; })
+        .attr("cy", function(d){ return d.y; })
+        .on("mouseover", function(d, i) {
+
+          tooltip.style("display", null);
+
+          d3v5.select(this)
+            .attr("stroke", '#383645')
+            .attr("stroke-width", 3 )
+            .attr("r", function(d){
+              return d.r
+            })})
+        .on("mousemove", function(d){
+          var x_pos = d3v5.mouse(this)[0] - 25
+          var y_pos = d3v5.mouse(this)[1] - 15
+          tooltip.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+          tooltip
+          // .select("text")
+            // .text(d.data.name)
+            .html("<span> Country: <br>" + ": " + d.country + "<br> Temperature: " +  d.temperature + "<br> Tourism: " + d.tourism + "</span>")
+        })
+        .on("mouseout", function(d, i) {
+
+          tooltip.style("display", "none");
+
+          d3v5.select(this).attr("stroke", "none")
+           .attr("r", function(d){
+             return d.r
+            })
+        })
+        .transition(t)
+        .style("fill", function(d){
+          if (d.data.temperature == null){
+            return "#383645"
+          }
+          else {
+            return color(d.data.temperature)
+          }
+        })
+        .attr("r", function(d){ return d.r });
+
+
+    // Add Tooltip
+    var tooltip = svg.append("g")
+
+    tooltip.append("text")
+        .style("class", "tooltip")
+
 }
 

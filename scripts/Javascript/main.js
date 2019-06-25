@@ -7,7 +7,7 @@ window.onload = function() {
   
     
     country = "France"
-    year = 2014
+    year = 2010
 
   	// process tourism data
     var tourism_data = process(response[0], response[2]);
@@ -16,13 +16,6 @@ window.onload = function() {
 
     slider(tourism_data, data_linegraph, data_piechart)
     circle_legend()
-
-    // var bubble_data = process_bubble(tourism_data);
-
-    // create bubble chart & slider
-    // bubble(tourism_data[year])
-
-    // bubble_update_internet(tourism_data, year, data_linegraph, data_piechart)
 
     // line chart
     line(data_linegraph, country, year)

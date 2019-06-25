@@ -94,6 +94,7 @@ function line(data, country, year){
 	// appends a 'group' element to 'svg'
 	// moves the 'group' element to the top left margin
 	var svg = d3v5.select("#line-area").append("svg")
+		.attr("id", "line")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
@@ -114,7 +115,7 @@ function line(data, country, year){
 	// Add the valueline path.
 	svg.append("path")
 		.data([data_line])
-		.attr("class", "line")
+		.attr("class", "line_tourism")
 		.style("stroke", "#708090")
 		.style("stroke-width", 3)
 		.style("fill", "none")
@@ -123,32 +124,33 @@ function line(data, country, year){
 	// Add the valueline2 path.
 	svg.append("path")
 		.data([data_line])
-		.attr("class", "line")
-		.style("stroke", "	#800000")
+		.attr("class", "line_temp")
+		.style("stroke", "#800000")
 		.style("stroke-width", 3)
 		.style("fill", "none")
 		.attr("d", valueline2);
 
 	// Add the X Axis
 	svg.append("g")
+		.attr("class", "x_axis")
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3v5.axisBottom(x));
 
 	// Add the Y0 Axis
 	svg.append("g")
-		.attr("class", "axisSteelBlue")
+		.attr("class", "y_axis_tourism")
 		.call(d3v5.axisLeft(y0));
 
 	// Add the Y1 Axis
 	svg.append("g")
-		.attr("class", "axisRed")
+		.attr("class", "y_axis_temp")
 		.attr("transform", "translate( " + width + ", 0 )")
 		.call(d3v5.axisRight(y1));
 
 
 	// Add x label
     svg.append('text')
-       .attr('class', 'title')
+       .attr('class', 'x_label')
        .attr("font-weight", "bold")
        .attr('x', width / 2)
        .attr('y', height + margin.bottom)
@@ -156,22 +158,24 @@ function line(data, country, year){
        .text('Month');
 
     // Add y labels
-    svg.append('g').attr("class", "variable")
+    svg.append('g').attr("class", "y_label_tourism")
        .append('text')
        .attr("font-weight", "bold")
        .attr("transform", "rotate(-90)")
        .attr('x', - (height / 2))
        .attr('y', - margin.left + 10)
        .attr('text-anchor', 'middle')
+       .style("fill", "#708090")
        .text("Tourism");
 
-   svg.append('g').attr("class", "variable")
+   svg.append('g').attr("class", "y_label_temp")
        .append('text')
        .attr("font-weight", "bold")
        .attr("transform", "rotate(-90)")
        .attr('x', - (height / 2))
        .attr('y', width + margin.right - 10)
        .attr('text-anchor', 'middle')
+       .style("fill", "#800000")
        .text("Temperature");
 
     // Add title
@@ -182,11 +186,11 @@ function line(data, country, year){
        .attr('x', width / 2)
        .attr('y', -10)
        .attr('text-anchor', 'middle')
-       .text('Relationship health spendings and ');
+       .text('Average temperature and tourism');
 
    // Add scale tourism axis
     svg.append('text')
-       .attr('class', 'title')
+       .attr('class', 'y_addition')
        .attr("font-size", "10px")
        .attr('x', 10)
        .attr('y', -5)
@@ -196,28 +200,87 @@ function line(data, country, year){
 
 };
 
-function update_line(data, year, val) {
-        
-        // Set new data
-        country = val.data.name
+function update_line(data, year, country) {
 
-        const path = d3v5.select(".line").selectAll("path")
-            .data(data);
+	var margin = {top: 35, right: 50, bottom: 35, left: 50},
+	width = 600 - margin.left - margin.right,
+	height = 350 - margin.top - margin.bottom;
 
-        // Update existing arcs
-        // path.transition().duration(200);
+	data = data[year][country]
+	console.log(data)
 
-        // Enter new arcs
-        path.enter().append("path")
-            .attr("fill", (d, i) => color(i))
-            .attr("d", arc)
-            .attr("stroke", "white")
-            .attr("stroke-width", "0.5px")
-            .each(function(d) { this._current = d; });
-    }
+	// change data structure
+	data_line = []
+	for (m in data){
+		data_line.push(data[m])
+	}
+
+	// parse the date / time
+	var parseTime = d3v5.timeParse("%m-%Y");
+	// var parseTime = d3v5.timeParse("%d-%b-%y");
+
+	// set the ranges
+	var x = d3v5.scaleTime().range([0, width]);
+	var y0 = d3v5.scaleLinear().range([height, 0]);
+	var y1 = d3v5.scaleLinear().range([height, 0]);
+
+	// define the 1st line
+	var valueline = d3v5.line()
+		.x(function(d) { return x(parseTime(d.date)); })
+		.y(function(d) { return y0(d.tourism); });
 
 
+	// define the 2nd line
+	var valueline2 = d3v5.line()
+		.x(function(d) { return x(parseTime(d.date)); })
+		.y(function(d) { return y1(d.temperature); });
+    
+    // Scale the range of the data
+	x.domain(d3v5.extent(data_line, function(d) {return parseTime(d.date); }));
+	y0.domain([0, d3v5.max(data_line, function(d) {return Math.max(d.tourism);})]);
+	y1.domain([d3v5.min(data_line, function(d) {return Math.min(d.temperature); }), d3v5.max(data_line, function(d) {return Math.max(d.temperature); })]);
+  
+	
+	var svg = d3v5.select("#line")
+
+	var t = d3v5.transition().duration(750)
+
+	// JOIN
+	var line_tourism = svg.selectAll(".line_tourism")
+		.data([data_line])
+
+	var line_temp = svg.selectAll(".line_temp")
+		.data([data_line])
+
+	var x_axis = svg.selectAll(".x_axis")
+		.transition(t)
+		.call(d3v5.axisBottom(x))
+
+	var y_axis_tourism = svg.selectAll(".y_axis_tourism")
+		.transition(t)
+		.call(d3v5.axisLeft(y0))
+
+	var y_axis_tourism = svg.selectAll(".y_axis_temp")
+		.transition(t)
+		.call(d3v5.axisRight(y1))
 
 
-
-
+	// ENTER
+	line_tourism.enter().append("path")
+		.attr("class", "line_tourism")
+		.style("stroke", "#708090")
+		.style("stroke-width", 3)
+		.style("fill", "none")
+		.merge(line_tourism)
+		.transition(t)
+		.attr("d", valueline);
+    
+    line_temp.enter().append("path")
+		.attr("class", "line_temp")
+		.style("stroke", "#708090")
+		.style("stroke-width", 3)
+		.style("fill", "none")
+		.merge(line_temp)
+		.transition(t)
+		.attr("d", valueline2);
+}

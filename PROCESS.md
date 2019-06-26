@@ -47,22 +47,12 @@ I Implemented the update functions for the bubble chart and line chart but not c
 
 #### Day 13
 I figured out why the bubble chart was not updating: I was selecting and naming the wrong names so it did not remove or join. Also I added the update for the line chart axis and the update for the piechart, but this is not right yet. When clicking on a country, the chart updates to the default value "incoming", also when it's set to "outgoing". I tried to always set the tickbox to the default setting when updating but this is not working yet. 
+
 #### Day 14
-For the bubble chart I use the reverse function (for color) because the color scheme is from red to blue instead of the other way around. I thought this worked but today I found out the colors are (in my opinion randomly) switching from the reverse to the not reverse. For example: If I change the year to 2013 it works, then 2014 again correct but back to 2013 all the ‘hot’ countries are suddenly blue instead of red. I fixed this by manually setting the colors in an array. 
+For the bubble chart I use the reverse function (for color) because the color scheme is from red to blue instead of the other way around. I thought this worked but today I found out the colors are (in my opinion randomly) switching from the reverse to the not reverse. For example: If I change the year to 2013 it works, then 2014 again correct but back to 2013 all the ‘hot’ countries are suddenly blue instead of red. I fixed this by manually setting the colors in an array. The updates are working correctly now.
 
 #### Day 15
-The tooltips were not working correctly, I only showed the country name but not the values. I fixed this (with help) after putting it inside a 'foreignObject' so javascript recognizes as a html. This way it works for all the graphs. 
-
-###
-https://www.d3-graph-gallery.com/graph/bubble_legend.html
-https://observablehq.com/@d3/bubble-chart
-https://me.chjiyun.com/2018/04/15/Interactive-Bubble-Chart/
-https://www.jonopens.com/blog/testing-d3-bubble-chart.html
-https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
-https://bl.ocks.org/alokkshukla/3d6be4be0ef9f6977ec6718b2916d168
+The tooltips were not working correctly, I only showed the country name but not the values. I fixed this (with help) after putting it inside a 'foreignObject' so javascript recognizes as a html. This way it works for all the graphs. Also I made final touches to my site. Also I added dots for the line chart. I found out something about the update was not working correctly anymore after editting it yester but I could not fix it in time again. How the site looks is in the readme. 
 
 
-
-#### Country codes with country name
-https://datahub.io/core/country-list#data
 

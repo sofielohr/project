@@ -74,7 +74,7 @@ function line_data(tourism, climate){
 function line(data, country, year){
 
 	// set margins and size
-	var margin = {top: 35, right: 50, bottom: 35, left: 50},
+	var margin = {top: 35, right: 50, bottom: 35, left: 70},
 		width = 600 - margin.left - margin.right,
 		height = 350 - margin.top - margin.bottom;
 
@@ -217,7 +217,6 @@ function line(data, country, year){
 		.attr("transform", "translate( " + width + ", 0 )")
 		.call(d3v5.axisRight(y1));
 
-
 	// add x label
     svg.append('text')
        .attr('class', 'x_label')
@@ -257,15 +256,6 @@ function line(data, country, year){
        .attr('y', -10)
        .attr('text-anchor', 'middle')
        .text('Average temperature and tourism');
-
-   // add scale tourism axis
-    svg.append('text')
-       .attr('class', 'y_addition')
-       .attr("font-size", "10px")
-       .attr('x', 10)
-       .attr('y', -5)
-       .attr('text-anchor', 'middle')
-       .text('x mln.');
 
    // add Tooltip
     var tooltip = svg.append("foreignObject")

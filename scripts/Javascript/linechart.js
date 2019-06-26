@@ -3,91 +3,99 @@
 function line_data(tourism, climate){
 
 	// create data object and main keys
-	var data = {}
+	var data = {};
 	var years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
 
 	// go over all the countries
 	Object.values(tourism).forEach(function(d){
 
-		// check if right year and make objects
+		// make new year object if not in data
 		if (!(d.Year in data)){
 
-			data[d.Year] = {}
+			data[d.Year] = {};
 		}
 		
+		// check if country already in object
 		if (d.GEO in data[d.Year]){
 
-			var country_variables = {}
-			country_variables.month = d.Month
-			country_variables.tourism = d.Value
-			country_variables.country = d.GEO
+			var country_variables = {};
+			country_variables.month = d.Month;
+			country_variables.tourism = d.Value;
+			country_variables.country = d.GEO;
+
+			// set the dates to format "%m-%Y"
 			if (d.Month < 10) {
-				country_variables.date = "0" + d.Month + "-" + d.Year
+				country_variables.date = "0" + d.Month + "-" + d.Year;
 			}
 			else {
-				country_variables.date = d.Month + "-" + d.Year
+				country_variables.date = d.Month + "-" + d.Year;
 			}
 
 			// add to the dataframe
-			data[d.Year][d.GEO][d.Month] = country_variables
+			data[d.Year][d.GEO][d.Month] = country_variables;
 
 		}
+		// if country not in object, make a new country object
 		else {
 
-			data[d.Year][d.GEO] = {}
+			data[d.Year][d.GEO] = {};
 
-			var country_variables = {}
-			country_variables.month = d.Month
-			country_variables.tourism = d.Value
-			country_variables.country = d.GEO
+			var country_variables = {};
+			country_variables.month = d.Month;
+			country_variables.tourism = d.Value;
+			country_variables.country = d.GEO;
+
+			// set the dates to format "%m-%Y"
 			if (d.Month < 10) {
-				country_variables.date = "0" + d.Month + "-" + d.Year
+				country_variables.date = "0" + d.Month + "-" + d.Year;
 			}
 			else {
-				country_variables.date = d.Month + "-" + d.Year
+				country_variables.date = d.Month + "-" + d.Year;
 			}
 
 			// add to the dataframe
-			data[d.Year][d.GEO][d.Month] = country_variables
+			data[d.Year][d.GEO][d.Month] = country_variables;
 		}      
 	})
 
-	// add climate data
+	// add climate data the same way
 	Object.values(climate).forEach(function(d){
 		
 		if (d.Year < 2019){
 			if (d.Name in data[d.Year]){
-			data[d.Year][d.Name][d.Month]["temperature"] = d.Average
+			data[d.Year][d.Name][d.Month]["temperature"] = d.Average;
 			}
 		}
 	})
 
-	return data
+	return data;
 }
 
 function line(data, country, year){
 
+	// set margins and size
 	var margin = {top: 35, right: 50, bottom: 35, left: 50},
 		width = 600 - margin.left - margin.right,
 		height = 350 - margin.top - margin.bottom;
 
 	// parse the date / time
 	var parseTime = d3v5.timeParse("%m-%Y");
-	// var parseTime = d3v5.timeParse("%d-%b-%y");
 
 	// set the ranges
-	var x = d3v5.scaleTime().range([0, width]);
-	var y0 = d3v5.scaleLinear().range([height, 0]);
-	var y1 = d3v5.scaleLinear().range([height, 0]);
+	var x = d3v5.scaleTime()
+		.range([0, width]);
+	var y0 = d3v5.scaleLinear()
+		.range([height, 0]);
+	var y1 = d3v5.scaleLinear()
+		.range([height, 0]);
 
 	// define the 1st line
-	var valueline = d3v5.line()
+	var valueline_tourism = d3v5.line()
 		.x(function(d) { return x(parseTime(d.date)); })
 		.y(function(d) { return y0(d.tourism); });
 
-
 	// define the 2nd line
-	var valueline2 = d3v5.line()
+	var valueline_temp = d3v5.line()
 		.x(function(d) { return x(parseTime(d.date)); })
 		.y(function(d) { return y1(d.temperature); });
 
@@ -101,37 +109,39 @@ function line(data, country, year){
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	data = data[year][country]
-	// change data structure
+	// set data to correct year and country
+	data = data[year][country];
+
+	// change data structure for line
 	data_line = []
 	for (m in data){
-		data_line.push(data[m])
+		data_line.push(data[m]);
 	}
 
-	// Scale the range of the data
+	// scale the range of the data
 	x.domain(d3v5.extent(data_line, function(d) {return parseTime(d.date); }));
 	y0.domain([0, d3v5.max(data_line, function(d) {return Math.max(d.tourism);})]);
 	y1.domain([d3v5.min(data_line, function(d) {return Math.min(d.temperature); }), d3v5.max(data_line, function(d) {return Math.max(d.temperature); })]);
 
-	// Add the valueline path.
+	// add the valueline path.
 	svg.append("path")
 		.data([data_line])
 		.attr("class", "line_tourism")
 		.style("stroke", "#708090")
 		.style("stroke-width", 3)
 		.style("fill", "none")
-		.attr("d", valueline);
+		.attr("d", valueline_tourism);
 
-	// Add the valueline2 path.
+	// add the valueline2 path.
 	svg.append("path")
 		.data([data_line])
 		.attr("class", "line_temp")
 		.style("stroke", "#800000")
 		.style("stroke-width", 3)
 		.style("fill", "none")
-		.attr("d", valueline2);
+		.attr("d", valueline_temp);
 
-	// Add the dots for the datapoints
+	// add the dots for the datapoints
 	svg.selectAll(".dot_tourism")
 		.data(data_line)
 		.enter().append("circle")
@@ -140,77 +150,75 @@ function line(data, country, year){
                   tooltip.style("display", null);
                 })
         .on("mousemove", function(d){
-                  var tourism = Math.round(d.tourism)
+			var tourism = Math.round(d.tourism)
 
-                  var x_pos = d3v5.mouse(this)[0] - 61
-                  var y_pos = d3v5.mouse(this)[1] - 61
+			var x_pos = d3v5.mouse(this)[0] - 61;
+			var y_pos = d3v5.mouse(this)[1] - 61;
+
+			var html = "<span><b> Tourism:</b>: " + tourism + "</span>";
                   
-                  var html = "<span><b> Tourism:</b>: " + tourism + "</span>"
-                  
-                  tooltip
-                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
-                    .html(html)
-                    .style("font-size", "10px")
+			tooltip
+				.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+				.html(html)
+				.style("font-size", "10px");
 
-                })
-                .on("mouseout", function(d, i) {
-
-                  tooltip.style("display", "none");
-                })
-		.attr("cx", function(d, i){ return x(parseTime(d.date))})
-		.attr("cy", function(d){ return y0(d.tourism)})
+        })
+        .on("mouseout", function(d, i) {
+			tooltip.style("display", "none");
+		})
+		.attr("cx", function(d, i){ return x(parseTime(d.date));})
+		.attr("cy", function(d){ return y0(d.tourism);})
 		.attr("r", 3)
-		.attr("fill", "#708090")
+		.attr("fill", "#708090");
 
 	svg.selectAll(".dot_temp")
 		.data(data_line)
 		.enter().append("circle")
 		.attr("class", "dot_temp")
 		.on("mouseover", function(d, i) {
-                  tooltip.style("display", null);
-                })
+			tooltip.style("display", null);
+		})
         .on("mousemove", function(d){
-                  var temperature = Math.round(d.temperature)
+			var temperature = Math.round(d.temperature)
 
-                  var x_pos = d3v5.mouse(this)[0] - 61
-                  var y_pos = d3v5.mouse(this)[1] - 61
-                  
-                  var html = "<span><b> Temperature</b>: " + temperature + "</span>"
-                  
-                  tooltip
-                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
-                    .html(html)
-                    .style("font-size", "10px")
+			var x_pos = d3v5.mouse(this)[0] - 61;
+			var y_pos = d3v5.mouse(this)[1] - 61;
 
-                })
-                .on("mouseout", function(d, i) {
+			var html = "<span><b> Temperature</b>: " + temperature + "</span>";
 
-                  tooltip.style("display", "none");
-                })
-		.attr("cx", function(d, i){ return x(parseTime(d.date))})
-		.attr("cy", function(d){ return y1(d.temperature)})
+			tooltip
+				.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+				.html(html)
+				.style("font-size", "10px")
+
+		})
+		.on("mouseout", function(d, i) {
+			tooltip.style("display", "none");
+		})
+		.attr("cx", function(d, i){ return x(parseTime(d.date));})
+		.attr("cy", function(d){ return y1(d.temperature);})
 		.attr("r", 3)
-		.attr("fill", "#800000")
+		.attr("fill", "#800000");
 
-	// Add the X Axis
+	// add the X Axis
 	svg.append("g")
 		.attr("class", "x_axis")
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3v5.axisBottom(x));
 
-	// Add the Y0 Axis
+	// add the Y0 Axis
 	svg.append("g")
 		.attr("class", "y_axis_tourism")
 		.call(d3v5.axisLeft(y0));
 
-	// Add the Y1 Axis
+	// add the Y1 Axis
 	svg.append("g")
 		.attr("class", "y_axis_temp")
 		.attr("transform", "translate( " + width + ", 0 )")
 		.call(d3v5.axisRight(y1));
 
 
-	// Add x label
+	// add x label
     svg.append('text')
        .attr('class', 'x_label')
        .attr("font-weight", "bold")
@@ -219,7 +227,7 @@ function line(data, country, year){
        .attr('text-anchor', 'middle')
        .text('Month');
 
-    // Add y labels
+    // add y labels
     svg.append('g').attr("class", "y_label_tourism")
        .append('text')
        .attr("font-weight", "bold")
@@ -240,7 +248,7 @@ function line(data, country, year){
        .style("fill", "#800000")
        .text("Temperature");
 
-    // Add title
+    // add title
     svg.append('text')
        .attr('class', 'title')
        .attr("font-size", "14px")
@@ -250,7 +258,7 @@ function line(data, country, year){
        .attr('text-anchor', 'middle')
        .text('Average temperature and tourism');
 
-   // Add scale tourism axis
+   // add scale tourism axis
     svg.append('text')
        .attr('class', 'y_addition')
        .attr("font-size", "10px")
@@ -259,7 +267,7 @@ function line(data, country, year){
        .attr('text-anchor', 'middle')
        .text('x mln.');
 
-   // Add Tooltip
+   // add Tooltip
     var tooltip = svg.append("foreignObject")
     .attr("width", 200)
     .attr("height", 60)
@@ -270,17 +278,17 @@ function line(data, country, year){
 
 function update_line(data, year, country) {
 
+	// set margins and size
 	var margin = {top: 35, right: 50, bottom: 35, left: 50},
 	width = 600 - margin.left - margin.right,
 	height = 350 - margin.top - margin.bottom;
 
-	data = data[year][country]
-	console.log(data)
+	data = data[year][country];
 
 	// change data structure
 	data_line = []
 	for (m in data){
-		data_line.push(data[m])
+		data_line.push(data[m]);
 	}
 
 	// parse the date / time
@@ -292,56 +300,41 @@ function update_line(data, year, country) {
 	var y1 = d3v5.scaleLinear().range([height, 0]);
 
 	// define the 1st line
-	var valueline = d3v5.line()
+	var valueline_tourism = d3v5.line()
 		.x(function(d) { return x(parseTime(d.date)); })
 		.y(function(d) { return y0(d.tourism); });
 
 
 	// define the 2nd line
-	var valueline2 = d3v5.line()
+	var valueline_temp = d3v5.line()
 		.x(function(d) { return x(parseTime(d.date)); })
 		.y(function(d) { return y1(d.temperature); });
     
-    // Scale the range of the data
+    // Ssale the range of the data
 	x.domain(d3v5.extent(data_line, function(d) {return parseTime(d.date); }));
 	y0.domain([0, d3v5.max(data_line, function(d) {return Math.max(d.tourism);})]);
 	y1.domain([d3v5.min(data_line, function(d) {return Math.min(d.temperature); }), d3v5.max(data_line, function(d) {return Math.max(d.temperature); })]);
   
-	
-	var svg = d3v5.select("#line")
+	// set svg	
+	var svg = d3v5.select("#line");
 
-	var t = d3v5.transition().duration(750)
+	// set transition
+	var t = d3v5.transition().duration(750);
 
-	// JOIN
+	// join data
 	var line_tourism = svg.selectAll(".line_tourism")
-		.data([data_line])
+		.data([data_line]);
 
 	var line_temp = svg.selectAll(".line_temp")
-		.data([data_line])
+		.data([data_line]);
 
 	var dot_tourism = svg.selectAll(".dot_tourism")
-		.data(data_line)
+		.data(data_line);
 
 	var dot_temp = svg.selectAll(".dot_temp")
-		.data(data_line)
+		.data(data_line);
 
-
-	var x_axis = svg.selectAll(".x_axis")
-		.transition(t)
-		.call(d3v5.axisBottom(x))
-
-	var y_axis_tourism = svg.selectAll(".y_axis_tourism")
-		.transition(t)
-		.call(d3v5.axisLeft(y0))
-
-	var y_axis_tourism = svg.selectAll(".y_axis_temp")
-		.transition(t)
-		.call(d3v5.axisRight(y1))
-
-
-
-
-	// ENTER
+	// enter and update
 	line_tourism.enter().append("path")
 		.attr("class", "line_tourism")
 		.style("stroke", "#708090")
@@ -349,88 +342,108 @@ function update_line(data, year, country) {
 		.style("fill", "none")
 		.merge(line_tourism)
 		.transition(t)
-		.attr("d", valueline);
+		.attr("d", valueline_tourism);
     
+    // check if temperature data available
     if (!(data[6].temperature == undefined)){
-    	line_temp.enter().append("path")
-		.attr("class", "line_temp")
-		.style("stroke", "#708090")
-		.style("stroke-width", 3)
-		.style("fill", "none")
-		.merge(line_temp)
-		.transition(t)
-		.attr("d", valueline2);
 
-    }
-    else {
-    	
+    	// enter and update the temperature data
+    	line_temp.enter()
+    	.append("path")
+			.attr("class", "line_temp")
+			.style("stroke", "#708090")
+			.style("stroke-width", 3)
+			.style("fill", "none")
+		.merge(line_temp)
+			.transition(t)
+			.attr("d", valueline_temp);
+
     }
     
-
+    // add the dots to the line together with the tooltip
 	dot_tourism
 		.enter()
 		.append("circle")
-			.attr("class", "dot_tourism")
-			.on("mouseover", function(d, i) {
-				tooltip.style("display", null);
-			})
-			.on("mousemove", function(d){
-				var tourism = Math.round(d.tourism)
+		.attr("class", "dot_tourism")
+		.on("mouseover", function(d, i) {
+			tooltip.style("display", null);
+		})
+		.on("mousemove", function(d){
+			var tourism = Math.round(d.tourism)
 
-                  var x_pos = d3v5.mouse(this)[0] - 61
-                  var y_pos = d3v5.mouse(this)[1] - 61
+			var x_pos = d3v5.mouse(this)[0] - 61;
+			var y_pos = d3v5.mouse(this)[1] - 61;
                   
-                  var html = "<span><b> Tourism:</b>: " + tourism + "</span>"
+			var html = "<span><b> Tourism:</b>: " + tourism + "</span>";
                   
-                  tooltip
-                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
-                    .html(html)
-                    .style("font-size", "10px")
+			tooltip
+				.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+				.html(html)
+				.style("font-size", "10px");
 
-                })
-                .on("mouseout", function(d, i) {
-
-                  tooltip.style("display", "none");
-                })
+		})
+		.on("mouseout", function(d, i) {
+			tooltip.style("display", "none");
+		})
         .attr("r", 3)
 		.attr("fill", "#708090")
 		.merge(dot_tourism)
 		.transition(t)
-		.attr("cx", function(d, i){ return x(parseTime(d.date))})
-		.attr("cy", function(d){ return y0(d.tourism)})
+		.attr("cx", function(d, i){ return x(parseTime(d.date));})
+		.attr("cy", function(d){ return y0(d.tourism);});
 		
+	
+	// make dots if temperature data unavailable
 	if (!(data[1].temperature == undefined)){
-	dot_temp.enter().append("circle")
+	dot_temp.enter()
+		.append("circle")
 		.attr("class", "dot_temp")
 		.on("mouseover", function(d, i) {
-                  tooltip.style("display", null);
-                })
+			tooltip.style("display", null);
+		})
         .on("mousemove", function(d){
-                  var temperature = Math.round(d.temperature)
+			var temperature = Math.round(d.temperature)
 
-                  var x_pos = d3v5.mouse(this)[0] - 61
-                  var y_pos = d3v5.mouse(this)[1] - 61
+			var x_pos = d3v5.mouse(this)[0] - 61;
+			var y_pos = d3v5.mouse(this)[1] - 61;
                   
-                  var html = "<span><b> Temperature</b>: " + temperature + "</span>"
+			var html = "<span><b> Temperature</b>: " + temperature + "</span>";
                   
-                  tooltip
-                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
-                    .html(html)
-                    .style("font-size", "10px")
+			tooltip
+				.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+				.html(html)
+				.style("font-size", "10px");
 
-                })
-                .on("mouseout", function(d, i) {
-
-                  tooltip.style("display", "none");
-                })
+			})
+		.on("mouseout", function(d, i) {
+			tooltip.style("display", "none");
+		})
         .attr("r", 3)
 		.attr("fill", "#800000")
 		.merge(dot_temp)
 		.transition(t)
-		.attr("cx", function(d, i){ return x(parseTime(d.date))})
-		.attr("cy", function(d){ return y1(d.temperature)})
+		.attr("cx", function(d, i){ return x(parseTime(d.date));})
+		.attr("cy", function(d){ return y1(d.temperature);})
 	}
+	// if no data show this to user
 	else {
-		dot_temp.remove()
+
+		alert("This country has not temperature data. Temperature data of your previous chosen country is shown");
+
 	}
+
+
+	// update axis
+	var x_axis = svg.selectAll(".x_axis")
+		.transition(t)
+		.call(d3v5.axisBottom(x));
+
+	var y_axis_tourism = svg.selectAll(".y_axis_tourism")
+		.transition(t)
+		.call(d3v5.axisLeft(y0));
+
+	var y_axis_temp = svg.selectAll(".y_axis_temp")
+		.transition(t)
+		.call(d3v5.axisRight(y1));
+
 }

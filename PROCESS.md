@@ -47,7 +47,11 @@ I Implemented the update functions for the bubble chart and line chart but not c
 
 #### Day 13
 I figured out why the bubble chart was not updating: I was selecting and naming the wrong names so it did not remove or join. Also I added the update for the line chart axis and the update for the piechart, but this is not right yet. When clicking on a country, the chart updates to the default value "incoming", also when it's set to "outgoing". I tried to always set the tickbox to the default setting when updating but this is not working yet. 
+#### Day 14
+For the bubble chart I use the reverse function (for color) because the color scheme is from red to blue instead of the other way around. I thought this worked but today I found out the colors are (in my opinion randomly) switching from the reverse to the not reverse. For example: If I change the year to 2013 it works, then 2014 again correct but back to 2013 all the ‘hot’ countries are suddenly blue instead of red. I fixed this by manually setting the colors in an array. 
 
+#### Day 15
+The tooltips were not working correctly, I only showed the country name but not the values. I fixed this (with help) after putting it inside a 'foreignObject' so javascript recognizes as a html. This way it works for all the graphs. 
 
 ###
 https://www.d3-graph-gallery.com/graph/bubble_legend.html

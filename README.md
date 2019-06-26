@@ -15,4 +15,17 @@ To show the relationship during the chosen year, a dual axis line chart is shown
 
 To show the preferences of the tourists, a pie chart is show for the chosen country and year. When the button "incoming" is clicked, the piechart shows distribution of the tourists arrivals by reporting country or foreign country. 
 
-When the button "outgoing" is clicked, 
+When the button "outgoing" is clicked, the piechart shows whether the residents of the country stay in their country or go to another country for their trip (domestic or outbound).
+
+![pie_eind](doc/pie_eind.png) 
+
+The information sheet contains information about the visualizations, data and used variables. 
+
+![info_sheet](doc/info_sheet.png) 
+
+### Examples used
++ [Update bubblechart](https://bl.ocks.org/HarryStevens/54d01f118bc8d1f2c4ccd98235f33848)
++ [D3 Bubble Chart](http://bl.ocks.org/phuonghuynh/54a2f97950feadb45b07)
++ [Dual axis line chart](https://bl.ocks.org/d3noob/814a2bcb3e7d8d8db74f36f77c8e6b7f)
++ [Bubblechart legend](https://www.d3-graph-gallery.com/graph/bubble_legend.html)
++ [Piechart update](https://bl.ocks.org/adamjanes/5e53cfa2ef3d3f05828020315a3ba18c/22619fa86de2045b6eeb4060e747c5076569ec47)

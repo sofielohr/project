@@ -91,7 +91,7 @@ function piechart(data, country, year){
             .attr("transform", `translate(${width / 2 - 80}, ${height / 2 + 10})`);
 
     const color = d3v5.scaleOrdinal().domain(function(d){return d.country})
-        .range(["#383645", "#faebd7"])
+        .range(["#cccccc", "#faebd7"])
 
     const pie = d3v5.pie()
         .value(d => d.count)
@@ -120,35 +120,16 @@ function piechart(data, country, year){
         .on("change", interactive_pie);
 
     function interactive_pie(val = this.value) {
-         console.log(data[val])
-
-        // Add Tooltip
-       var tooltip = svg.append("g")
-
-       tooltip.append("text")
-          .style("class", "tooltip")
+        console.log(data[val])
 
         // Join new data
         const path = svg.selectAll("path")
             .data(pie(data[val]));
 
-        var legend = d3v5.select(".legend")
-            .data(color.domain())
-
-
-        // exit legend
-        legend.exit()
-            .attr("class", "exit")
-            .transition().duration(200)
-            .remove()
-
         // Update existing arcs
         path.transition().duration(200).attrTween("d", arcTween);
 
         path.exit().remove().transition().duration(200).attrTween("d", arcTween)
-
-        legend.attr("class", "update")
-            .transition().duration(200)
 
         // Enter new arcs
         path.enter().append("path")
@@ -162,10 +143,19 @@ function piechart(data, country, year){
                     .attr("d", arc)
                 })
                 .on("mousemove", function(d){
-                  var x_pos = d3v5.mouse(this)[0] - 25
-                  var y_pos = d3v5.mouse(this)[1] - 15
-                  tooltip.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
-                  tooltip.select("text").text(d.data.country)
+                    
+                    var count = Math.round(d.data.count)
+
+                  var x_pos = d3v5.mouse(this)[0] - 61
+                  var y_pos = d3v5.mouse(this)[1] - 61
+                  
+                  var html = "<span><b>" + d.data.country + "</b>: " +  count + "</span>"
+                  
+                  tooltip
+                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                    .html(html)
+                    .style("font-size", "10px")
+
                 })
                 .on("mouseout", function(d, i) {
 
@@ -180,55 +170,16 @@ function piechart(data, country, year){
             .attr("stroke-width", "0.5px")
             .each(function(d) { console.log(d); this._current = d; });
 
-        legend.enter()
-            .append("g")
-            .attr("class", "legend")
-            .attr("transform", function(d,i){
-                var height = legendRectSize + legendSpacing
-                var offset = height * color.domain().length / 2
-                var horz = 5 * legendRectSize
-                var vert = i * height - offset
-                return "translate(" + horz + "," + (vert - 16) + ")";
-            })
-        
-        legend.append("rect")
-            .attr("width", legendRectSize)
-            .attr("height", legendRectSize)
-            .style("fill", color)
-            .style("stroke", color)
-        
-        legend.append("text")
-                .data(data[val])
-                .attr("id", "pie-legend")
-                .attr("x", legendRectSize + 2 * legendSpacing)
-                .attr("y", legendRectSize - 2 * legendSpacing)
-                .text(function(d){ return d.country; })
-
-
-        // Enter new legend text
-        // var text = svg.select(".legend")
-        //     .data(data[val])
-
-        // text.exit()
-        //     .transition().duration(200)
-        //     .attr("opacity", 1e-6)
-        //     .remove()
-
-        // text.transition().duration(200)
-        //         .attr("x", legendRectSize + 2 * legendSpacing)
-        //         .attr("y", legendRectSize - 2 * legendSpacing)
-        
-        // text.enter().append("text")
-        //     .attr("opacity", 1e-6)
-        //     .attr("x", legendRectSize + 2 * legendSpacing)
-        //         .attr("y", legendRectSize - 2 * legendSpacing)
-        //         .text(function(d){ console.log(d); return d.country; })
-
-
-
     }
 
     interactive_pie("incoming");
+
+    // Add Tooltip
+    var tooltip = svg.append("foreignObject")
+    .attr("width", 200)
+    .attr("height", 60)
+    .style("class", "tooltip")
+
 }
 
 
@@ -242,7 +193,7 @@ function update_pie(data, year, country) {
     var legendSpacing = 3
 
     const color = d3v5.scaleOrdinal().domain(function(d){return d.country})
-        .range(["#383645", "#faebd7"])
+        .range(["#cccccc", "#faebd7"])
 
     const pie = d3v5.pie()
         .value(d => d.count)
@@ -264,8 +215,10 @@ function update_pie(data, year, country) {
         return (t) => arc(i(t));
     }
 
-    var inc = d3v5.select("#incoming").checked=true
-    var outg = d3v5.select("#outgoing").checked=false
+    d3v5.select("#incoming").property('checked', true)
+
+    var inc = d3v5.select("input#incoming").checked=true
+    var outg = d3v5.select("input#outgoing").checked=false
 
     data = data[year][country]["incoming"]
 
@@ -285,26 +238,35 @@ function update_pie(data, year, country) {
   pie_parts.enter().append("path")
     .attr("class", "pie_parts")
     .on("mouseover", function(d, i) {
-          tooltip.style("display", null);
+                  tooltip.style("display", null);
 
-          d3v5.select(this)
-            .attr("stroke", '#272626')
-            .attr("stroke-width", 4)
-            .attr("d", arc)
-        })
-        .on("mousemove", function(d){
-          var x_pos = d3v5.mouse(this)[0] - 25
-          var y_pos = d3v5.mouse(this)[1] - 15
-          tooltip.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
-          tooltip.select("text").text(d.data.country)
-        })
-        .on("mouseout", function(d, i) {
+                  d3v5.select(this)
+                    .attr("stroke", '#272626')
+                    .attr("stroke-width", 4)
+                    .attr("d", arc)
+                })
+                .on("mousemove", function(d){
+                    
+                    var count = Math.round(d.data.count)
 
-          tooltip.style("display", "none");
+                  var x_pos = d3v5.mouse(this)[0] - 61
+                  var y_pos = d3v5.mouse(this)[1] - 61
+                  
+                  var html = "<span><b>" + d.data.country + "</b>: " +  count + "</span>"
+                  
+                  tooltip
+                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                    .html(html)
+                    .style("font-size", "10px")
 
-          d3v5.select(this).attr("stroke", "none")
-             .attr("d", arc)
-        })
+                })
+                .on("mouseout", function(d, i) {
+
+                  tooltip.style("display", "none");
+
+                  d3v5.select(this).attr("stroke", "none")
+                     .attr("d", arc)
+                })
     .attr("fill", (d, i) => color(i))
     .attr("d", arc)
     .attr("stroke", "white")
@@ -313,7 +275,13 @@ function update_pie(data, year, country) {
     .transition(t)
     .each(function(d){ console.log(d);this._current = d;});
 
-    pie_parts.transition(t).attrTween("d", arcTween)    
+    pie_parts.transition(t).attrTween("d", arcTween)
+
+    // Add Tooltip
+    var tooltip = svg.append("foreignObject")
+    .attr("width", 200)
+    .attr("height", 60)
+    .style("class", "tooltip")    
 }
 
 

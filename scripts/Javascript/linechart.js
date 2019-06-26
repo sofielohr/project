@@ -130,6 +130,67 @@ function line(data, country, year){
 		.style("fill", "none")
 		.attr("d", valueline2);
 
+	// Add the dots for the datapoints
+	svg.selectAll(".dot_tourism")
+		.data(data_line)
+		.enter().append("circle")
+		.attr("class", "dot_tourism")
+		.on("mouseover", function(d, i) {
+                  tooltip.style("display", null);
+                })
+        .on("mousemove", function(d){
+                  var tourism = Math.round(d.tourism)
+
+                  var x_pos = d3v5.mouse(this)[0] - 61
+                  var y_pos = d3v5.mouse(this)[1] - 61
+                  
+                  var html = "<span><b> Tourism:</b>: " + tourism + "</span>"
+                  
+                  tooltip
+                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                    .html(html)
+                    .style("font-size", "10px")
+
+                })
+                .on("mouseout", function(d, i) {
+
+                  tooltip.style("display", "none");
+                })
+		.attr("cx", function(d, i){ return x(parseTime(d.date))})
+		.attr("cy", function(d){ return y0(d.tourism)})
+		.attr("r", 3)
+		.attr("fill", "#708090")
+
+	svg.selectAll(".dot_temp")
+		.data(data_line)
+		.enter().append("circle")
+		.attr("class", "dot_temp")
+		.on("mouseover", function(d, i) {
+                  tooltip.style("display", null);
+                })
+        .on("mousemove", function(d){
+                  var temperature = Math.round(d.temperature)
+
+                  var x_pos = d3v5.mouse(this)[0] - 61
+                  var y_pos = d3v5.mouse(this)[1] - 61
+                  
+                  var html = "<span><b> Temperature</b>: " + temperature + "</span>"
+                  
+                  tooltip
+                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                    .html(html)
+                    .style("font-size", "10px")
+
+                })
+                .on("mouseout", function(d, i) {
+
+                  tooltip.style("display", "none");
+                })
+		.attr("cx", function(d, i){ return x(parseTime(d.date))})
+		.attr("cy", function(d){ return y1(d.temperature)})
+		.attr("r", 3)
+		.attr("fill", "#800000")
+
 	// Add the X Axis
 	svg.append("g")
 		.attr("class", "x_axis")
@@ -197,6 +258,12 @@ function line(data, country, year){
        .attr('text-anchor', 'middle')
        .text('x mln.');
 
+   // Add Tooltip
+    var tooltip = svg.append("foreignObject")
+    .attr("width", 200)
+    .attr("height", 60)
+    .style("class", "tooltip")
+
 
 };
 
@@ -251,6 +318,12 @@ function update_line(data, year, country) {
 	var line_temp = svg.selectAll(".line_temp")
 		.data([data_line])
 
+	var dot_tourism = svg.selectAll(".dot_tourism")
+		.data(data_line)
+
+	var dot_temp = svg.selectAll(".dot_temp")
+		.data(data_line)
+
 	var x_axis = svg.selectAll(".x_axis")
 		.transition(t)
 		.call(d3v5.axisBottom(x))
@@ -282,4 +355,67 @@ function update_line(data, year, country) {
 		.merge(line_temp)
 		.transition(t)
 		.attr("d", valueline2);
+
+	dot_tourism.enter().append("circle")
+		.attr("class", "dot_tourism")
+		.on("mouseover", function(d, i) {
+                  tooltip.style("display", null);
+                })
+        .on("mousemove", function(d){
+                  var tourism = Math.round(d.tourism)
+
+                  var x_pos = d3v5.mouse(this)[0] - 61
+                  var y_pos = d3v5.mouse(this)[1] - 61
+                  
+                  var html = "<span><b> Tourism:</b>: " + tourism + "</span>"
+                  
+                  tooltip
+                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                    .html(html)
+                    .style("font-size", "10px")
+
+                })
+                .on("mouseout", function(d, i) {
+
+                  tooltip.style("display", "none");
+                })
+        .attr("r", 3)
+		.attr("fill", "#708090")
+		.merge(dot_tourism)
+		.transition(t)
+		.attr("cx", function(d, i){ return x(parseTime(d.date))})
+		.attr("cy", function(d){ return y0(d.tourism)})
+		
+
+	dot_temp.enter().append("circle")
+		.attr("class", "dot_temp")
+		.on("mouseover", function(d, i) {
+                  tooltip.style("display", null);
+                })
+        .on("mousemove", function(d){
+                  var temperature = Math.round(d.temperature)
+
+                  var x_pos = d3v5.mouse(this)[0] - 61
+                  var y_pos = d3v5.mouse(this)[1] - 61
+                  
+                  var html = "<span><b> Temperature</b>: " + temperature + "</span>"
+                  
+                  tooltip
+                    .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                    .html(html)
+                    .style("font-size", "10px")
+
+                })
+                .on("mouseout", function(d, i) {
+
+                  tooltip.style("display", "none");
+                })
+        .attr("r", 3)
+		.attr("fill", "#800000")
+		.merge(dot_temp)
+		.transition(t)
+		.attr("cx", function(d, i){ return x(parseTime(d.date))})
+		.attr("cy", function(d){ return y1(d.temperature)})
+		
+
 }

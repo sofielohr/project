@@ -2,6 +2,7 @@
 
 function line_data(tourism, climate){
 
+	// create data object and main keys
 	var data = {}
 	var years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
 
@@ -324,6 +325,7 @@ function update_line(data, year, country) {
 	var dot_temp = svg.selectAll(".dot_temp")
 		.data(data_line)
 
+
 	var x_axis = svg.selectAll(".x_axis")
 		.transition(t)
 		.call(d3v5.axisBottom(x))
@@ -337,6 +339,8 @@ function update_line(data, year, country) {
 		.call(d3v5.axisRight(y1))
 
 
+
+
 	// ENTER
 	line_tourism.enter().append("path")
 		.attr("class", "line_tourism")
@@ -347,7 +351,8 @@ function update_line(data, year, country) {
 		.transition(t)
 		.attr("d", valueline);
     
-    line_temp.enter().append("path")
+    if (!(data[6].temperature == undefined)){
+    	line_temp.enter().append("path")
 		.attr("class", "line_temp")
 		.style("stroke", "#708090")
 		.style("stroke-width", 3)
@@ -356,13 +361,21 @@ function update_line(data, year, country) {
 		.transition(t)
 		.attr("d", valueline2);
 
-	dot_tourism.enter().append("circle")
-		.attr("class", "dot_tourism")
-		.on("mouseover", function(d, i) {
-                  tooltip.style("display", null);
-                })
-        .on("mousemove", function(d){
-                  var tourism = Math.round(d.tourism)
+    }
+    else {
+    	
+    }
+    
+
+	dot_tourism
+		.enter()
+		.append("circle")
+			.attr("class", "dot_tourism")
+			.on("mouseover", function(d, i) {
+				tooltip.style("display", null);
+			})
+			.on("mousemove", function(d){
+				var tourism = Math.round(d.tourism)
 
                   var x_pos = d3v5.mouse(this)[0] - 61
                   var y_pos = d3v5.mouse(this)[1] - 61
@@ -386,7 +399,7 @@ function update_line(data, year, country) {
 		.attr("cx", function(d, i){ return x(parseTime(d.date))})
 		.attr("cy", function(d){ return y0(d.tourism)})
 		
-
+	if (!(data[1].temperature == undefined)){
 	dot_temp.enter().append("circle")
 		.attr("class", "dot_temp")
 		.on("mouseover", function(d, i) {
@@ -416,6 +429,8 @@ function update_line(data, year, country) {
 		.transition(t)
 		.attr("cx", function(d, i){ return x(parseTime(d.date))})
 		.attr("cy", function(d){ return y1(d.temperature)})
-		
-
+	}
+	else {
+		dot_temp.remove()
+	}
 }

@@ -101,9 +101,6 @@ function piechart(data, country, year){
         .innerRadius(0)
         .outerRadius(radius);
 
-    var legend = svg.selectAll(".legend")
-        .data(color.domain())
-
     function type(d) {
         d.incoming = Number(d.incoming);
         d.outgoing = Number(d.outgoing);

@@ -67,7 +67,6 @@ function piechart_data(outgoing, incoming){
         }
     })
     return data;
-
 }
 
 function piechart(data, country, year){
@@ -216,7 +215,8 @@ function update_pie(data, year, country) {
     d3v5.select("#incoming").property('checked', true)
     d3v5.select("#outgoing").property('checked', false)
 
-    data = data[year][country]["incoming"]
+    data = data[year][country]
+    data_default = data["incoming"]
 
     // set svg
     var svg = d3v5.select(".pie_area")
@@ -226,7 +226,7 @@ function update_pie(data, year, country) {
 
     // join piedata
     var pie_parts = svg.selectAll(".pie_parts")
-        .data(pie(data))
+        .data(pie(data_default))
 
     pie_parts
         .transition(t)

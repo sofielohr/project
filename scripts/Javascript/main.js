@@ -16,13 +16,12 @@ window.onload = function() {
     slider(tourism_data, data_linegraph, data_piechart);
     circle_legend();
 
-    // line chart
+    // line and pie chart
     line(data_linegraph, country, year);
-
     piechart(data_piechart, country, year);
   
-  // }).catch(function(e){
-  //   throw(e);
+  }).catch(function(e){
+    throw(e);
   })
 
 

@@ -5,6 +5,11 @@ Sofie Löhr (11038926)
 
 https://sofielohr.github.io/project/
 
+### Link to video
+
+https://youtu.be/qiesoWNGbNw
+
+
 ### Visualizations
 
 ![page1](doc/page1.png) 

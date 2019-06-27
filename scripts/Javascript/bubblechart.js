@@ -5,7 +5,7 @@ function process(tourism_data, climate_data) {
   // make data object and keys
   var data = {};
   var temperature = {};
-  var years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
+  var years = ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018"];
 
   // make objects for all the years
   for (index in years){
@@ -27,7 +27,7 @@ function process(tourism_data, climate_data) {
     })
 
     // add objects for 
-    data[year] = {'children':tourism};
+    data[year] = {"children":tourism};
   }
 
   // add climate data in the same way
@@ -71,7 +71,6 @@ function bubble(data, year, data_line, data_pie){
   // add legend
   var svg = d3v5.select("#bubble-color-legend")
     .append("svg")
-    .attr("transform", "translate(600,550)")
     .call(color_legend);
 
   function color_legend(g){
@@ -135,29 +134,29 @@ function slider(data, data_line, data_pie){
      .max(d3v5.max(dataTime))
      .step(1000 * 60 * 60 * 24 * 365)
      .width(300)
-     .tickFormat(d3v5.timeFormat('%Y'))
+     .tickFormat(d3v5.timeFormat("%Y"))
      .tickValues(dataTime)
      .default(new Date(2010, 10, 3))
-     .on('onchange', val => {
+     .on("onchange", val => {
          var year = val.getFullYear();
          
          // Create new
          redraw(data, data_line, data_pie, year);
-         d3v5.select('p#value-time').text(d3v5.timeFormat('%Y')(val));
+         d3v5.select("p#value-time").text(d3v5.timeFormat("%Y")(val));
      });
 
   // add slider to svg
-  var gTime = d3v5.select('div#slider-time')
-      .append('svg')
-      .attr('width', 500)
-      .attr('height', 100)
-      .append('g')
-      .attr('transform', 'translate(20,30)');
+  var gTime = d3v5.select("div#slider-time")
+      .append("svg")
+      .attr("width", 500)
+      .attr("height", 100)
+      .append("g")
+      .attr("transform", "translate(20,30)");
 
   // call the slider
   gTime.call(sliderTime);
 
-  d3v5.select('p#value-time').text(d3v5.timeFormat('%Y')(sliderTime.value()));
+  d3v5.select("p#value-time").text(d3v5.timeFormat("%Y")(sliderTime.value()));
 
   // make bubble chart
   var default_year = 2010;
@@ -203,12 +202,12 @@ function circle_legend(){
     .data(valuesToShow)
     .enter()
     .append("line")
-      .attr('x1', function(d){ return xCircle + size(d); } )
-      .attr('x2', xLabel)
-      .attr('y1', function(d){ return yCircle - size(d); } )
-      .attr('y2', function(d){ return yCircle - size(d); } )
-      .attr('stroke', 'black')
-      .style('stroke-dasharray', ('2,2'));
+      .attr("x1", function(d){ return xCircle + size(d); } )
+      .attr("x2", xLabel)
+      .attr("y1", function(d){ return yCircle - size(d); } )
+      .attr("y2", function(d){ return yCircle - size(d); } )
+      .attr("stroke", "black")
+      .style("stroke-dasharray", ("2,2"));
 
   // add legend: labels
   svg
@@ -216,11 +215,11 @@ function circle_legend(){
     .data(valuesToShow)
     .enter()
     .append("text")
-      .attr('x', xLabel)
-      .attr('y', function(d){ return yCircle - size(d); } )
+      .attr("x", xLabel)
+      .attr("y", function(d){ return yCircle - size(d); } )
       .text( function(d){ return d; } )
       .style("font-size", 10)
-      .attr('alignment-baseline', 'middle');
+      .attr("alignment-baseline", "middle");
 
   svg.append("text")
     .attr("x", 0)
@@ -294,10 +293,11 @@ function redraw(data, data_line, data_pie, year){
 
         // on click, update all the functions
         country = d.data.name;
-        var year = $('.slider .parameter-value text').html();
+        var year = $(".slider .parameter-value text").html();
 
         update_line(data_line, year, country);
         update_pie(data_pie, year, country);
+        update_text(year, country)
       })
       .attr("r", 1e-6)
       .attr("cx", function(d){ return d.x; })
@@ -308,7 +308,7 @@ function redraw(data, data_line, data_pie, year){
 
         // set stroke
         d3v5.select(this)
-          .attr("stroke", '#363942')
+          .attr("stroke", "#363942")
           .attr("stroke-width", 3 )
           .attr("r", function(d){
             return d.r;

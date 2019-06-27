@@ -4,7 +4,7 @@ function line_data(tourism, climate){
 
 	// create data object and main keys
 	var data = {};
-	var years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
+	var years = ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018"];
 
 	// go over all the countries
 	Object.values(tourism).forEach(function(d){
@@ -74,7 +74,7 @@ function line_data(tourism, climate){
 function line(data, country, year){
 
 	// set margins and size
-	var margin = {top: 35, right: 50, bottom: 35, left: 70},
+	var margin = {top: 50, right: 50, bottom: 35, left: 70},
 		width = 600 - margin.left - margin.right,
 		height = 350 - margin.top - margin.bottom;
 
@@ -100,14 +100,15 @@ function line(data, country, year){
 		.y(function(d) { return y1(d.temperature); });
 
 	// append the svg obgect to the body of the page
-	// appends a 'group' element to 'svg'
-	// moves the 'group' element to the top left margin
+	// appends a "group" element to "svg"
+	// moves the "group" element to the top left margin
 	var svg = d3v5.select("#line-area").append("svg")
 		.attr("id", "line")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+		.attr("class", "line_area");
 
 	// set data to correct year and country
 	data = data[year][country];
@@ -218,44 +219,62 @@ function line(data, country, year){
 		.call(d3v5.axisRight(y1));
 
 	// add x label
-    svg.append('text')
-       .attr('class', 'x_label')
+    svg.append("text")
+       .attr("class", "x_label")
        .attr("font-weight", "bold")
-       .attr('x', width / 2)
-       .attr('y', height + margin.bottom)
-       .attr('text-anchor', 'middle')
-       .text('Month');
+       .attr("x", width / 2)
+       .attr("y", height + margin.bottom)
+       .attr("text-anchor", "middle")
+       .text("Month");
 
     // add y labels
-    svg.append('g').attr("class", "y_label_tourism")
-       .append('text')
+    svg.append("g").attr("class", "y_label_tourism")
+       .append("text")
        .attr("font-weight", "bold")
        .attr("transform", "rotate(-90)")
-       .attr('x', - (height / 2))
-       .attr('y', - margin.left + 10)
-       .attr('text-anchor', 'middle')
+       .attr("x", - (height / 2))
+       .attr("y", - margin.left + 10)
+       .attr("text-anchor", "middle")
        .style("fill", "#708090")
        .text("Tourism");
 
-   svg.append('g').attr("class", "y_label_temp")
-       .append('text')
+   svg.append("g").attr("class", "y_label_temp")
+       .append("text")
        .attr("font-weight", "bold")
        .attr("transform", "rotate(-90)")
-       .attr('x', - (height / 2))
-       .attr('y', width + margin.right - 10)
-       .attr('text-anchor', 'middle')
+       .attr("x", - (height / 2))
+       .attr("y", width + margin.right - 10)
+       .attr("text-anchor", "middle")
        .style("fill", "#800000")
        .text("Temperature");
 
     // add title
-    svg.append('text')
-       .attr('class', 'title')
+    svg.append("text")
+       .attr("class", "title")
        .attr("font-size", "14px")
        .attr("font-weight", "bold")
-       .attr('x', width / 2)
-       .attr('y', -10)
-       .attr('text-anchor', 'middle')
-       .text('Average temperature and tourism');
+       .attr("x", width / 2)
+       .attr("y", -30)
+       .attr("text-anchor", "middle")
+       .text("Average temperature and tourism");
+
+   // add text to show the chosen country and year
+   svg.append("text")
+       .attr("class", "chosen_country")
+       .attr("font-size", "16px")
+       .attr("font-weight", "bold")
+       .attr("x", margin.left/2)
+       .attr("y", 0)
+       .attr("text-anchor", "left")
+       .text(country);
+
+   svg.append("text")
+       .attr("class", "chosen_year")
+       .attr("font-size", "16px")
+       .attr("x", margin.left/2)
+       .attr("y", 16)
+       .attr("text-anchor", "left")
+       .text(year);
 
    // add Tooltip
     var tooltip = svg.append("foreignObject")
@@ -269,7 +288,7 @@ function line(data, country, year){
 function update_line(data, year, country) {
 
 	// set margins and size
-	var margin = {top: 35, right: 50, bottom: 35, left: 50},
+	var margin = {top: 50, right: 50, bottom: 35, left: 70},
 	width = 600 - margin.left - margin.right,
 	height = 350 - margin.top - margin.bottom;
 
@@ -311,20 +330,14 @@ function update_line(data, year, country) {
 	// set transition
 	var t = d3v5.transition().duration(750);
 
-	// join data
+	// join data for tourism
 	var line_tourism = svg.selectAll(".line_tourism")
-		.data([data_line]);
-
-	var line_temp = svg.selectAll(".line_temp")
 		.data([data_line]);
 
 	var dot_tourism = svg.selectAll(".dot_tourism")
 		.data(data_line);
 
-	var dot_temp = svg.selectAll(".dot_temp")
-		.data(data_line);
-
-	// enter and update
+	// enter and update for tourism
 	line_tourism.enter().append("path")
 		.attr("class", "line_tourism")
 		.style("stroke", "#708090")
@@ -333,24 +346,8 @@ function update_line(data, year, country) {
 		.merge(line_tourism)
 		.transition(t)
 		.attr("d", valueline_tourism);
-    
-    // check if temperature data available
-    if (!(data[6].temperature == undefined)){
 
-    	// enter and update the temperature data
-    	line_temp.enter()
-    	.append("path")
-			.attr("class", "line_temp")
-			.style("stroke", "#708090")
-			.style("stroke-width", 3)
-			.style("fill", "none")
-		.merge(line_temp)
-			.transition(t)
-			.attr("d", valueline_temp);
-
-    }
-    
-    // add the dots to the line together with the tooltip
+	// add the dots to the line together with the tooltip for tourism
 	dot_tourism
 		.enter()
 		.append("circle")
@@ -381,11 +378,31 @@ function update_line(data, year, country) {
 		.transition(t)
 		.attr("cx", function(d, i){ return x(parseTime(d.date));})
 		.attr("cy", function(d){ return y0(d.tourism);});
-		
-	
-	// make dots if temperature data unavailable
-	if (!(data[1].temperature == undefined)){
-	dot_temp.enter()
+    
+    
+    // for temperature, check if missing data
+    if (!(data[6].temperature == undefined)){
+
+    	// join data if temperature available
+    	var line_temp = svg.selectAll(".line_temp")
+			.data([data_line]);
+
+		var dot_temp = svg.selectAll(".dot_temp")
+			.data(data_line);
+
+    	// enter and update the temperature data
+    	line_temp.enter()
+    	.append("path")
+			.attr("class", "line_temp")
+			.style("stroke", "#708090")
+			.style("stroke-width", 3)
+			.style("fill", "none")
+		.merge(line_temp)
+			.transition(t)
+			.attr("d", valueline_temp);
+
+		// add dots and tooltip to the line
+		dot_temp.enter()
 		.append("circle")
 		.attr("class", "dot_temp")
 		.on("mouseover", function(d, i) {
@@ -409,19 +426,41 @@ function update_line(data, year, country) {
 			tooltip.style("display", "none");
 		})
         .attr("r", 3)
-		.attr("fill", "#800000")
 		.merge(dot_temp)
 		.transition(t)
 		.attr("cx", function(d, i){ return x(parseTime(d.date));})
 		.attr("cy", function(d){ return y1(d.temperature);})
-	}
-	// if no data show this to user
-	else {
+		.attr("fill", "#800000")
+    }
+    else{
+    	// if temperature not available, set to empty array
+    	var line_temp = svg.selectAll(".line_temp")
+			.data([[]]);
 
-		alert("This country has not temperature data. Temperature data of your previous chosen country is shown");
+		var dot_temp = svg.selectAll(".dot_temp")
+			.data([0,0,0,0,0,0,0,0,0,0,0,0]);
 
-	}
+    	// enter and update the temperature data
+    	line_temp.enter()
+    	.append("path")
+			.attr("class", "line_temp")
+			.style("stroke", "#708090")
+			.style("stroke-width", 3)
+			.style("fill", "none")
+		.merge(line_temp)
+			.transition(t)
+			.attr("d", valueline_temp);
 
+		// add dots to the line (white)
+		dot_temp.enter()
+			.append("circle")
+			.attr("class", "dot_temp")
+	        .attr("r", 3)
+			.merge(dot_temp)
+			.attr("cx", function(d, i){return null;})
+			.attr("cy", function(d){ return null;})
+			.attr("fill", "#ffffff")
+    }	
 
 	// update axis
 	var x_axis = svg.selectAll(".x_axis")
@@ -435,5 +474,46 @@ function update_line(data, year, country) {
 	var y_axis_temp = svg.selectAll(".y_axis_temp")
 		.transition(t)
 		.call(d3v5.axisRight(y1));
+
+}
+
+function update_text(year, country){
+
+	// set margins and size
+	var margin = {top: 50, right: 50, bottom: 35, left: 70},
+	width = 600 - margin.left - margin.right,
+	height = 350 - margin.top - margin.bottom;
+
+	var t = d3v5.transition().duration(200)
+
+	// select svg
+	var g = d3v5.select(".line_area");
+
+	// remove old text
+	var text_country = g.selectAll(".chosen_country")
+		.remove()
+
+	var text_year = g.selectAll(".chosen_year")
+		.remove()
+
+	// add text to show the chosen country and year
+   g.append("text")
+       .attr("class", "chosen_country")
+       .attr("font-size", "16px")
+       .attr("font-weight", "bold")
+       .attr("x", margin.left/2)
+       .attr("y", 0)
+       .attr("text-anchor", "left")
+       .transition(t)
+       .text(country);
+
+   g.append("text")
+       .attr("class", "chosen_year")
+       .attr("font-size", "16px")
+       .attr("x", margin.left/2)
+       .attr("y", 16)
+       .attr("text-anchor", "left")
+       .transition(t)
+       .text(year);
 
 }

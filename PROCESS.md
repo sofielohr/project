@@ -52,7 +52,14 @@ I figured out why the bubble chart was not updating: I was selecting and naming 
 For the bubble chart I use the reverse function (for color) because the color scheme is from red to blue instead of the other way around. I thought this worked but today I found out the colors are (in my opinion randomly) switching from the reverse to the not reverse. For example: If I change the year to 2013 it works, then 2014 again correct but back to 2013 all the ‘hot’ countries are suddenly blue instead of red. I fixed this by manually setting the colors in an array. The updates are working correctly now.
 
 #### Day 15
-The tooltips were not working correctly, I only showed the country name but not the values. I fixed this (with help) after putting it inside a 'foreignObject' so javascript recognizes as a html. This way it works for all the graphs. Also I made final touches to my site. Also I added dots for the line chart. I found out something about the update was not working correctly anymore after editting it yester but I could not fix it in time again. How the site looks is in the readme. 
+The tooltips were not working correctly, I only showed the country name but not the values. I fixed this (with help) after putting it inside a 'foreignObject' so javascript recognizes as a html. This way it works for all the graphs. Also I made final touches to my site. Also I added dots for the line chart. 
+
+#### Day 16
+I editted the update a bit to make the transitions prettier when there is no data. Also I added a text block that shows the chosen year and country for the pie and linechart. The final version looks like this. 
+
+![page1](doc/page1.png) 
+![page1](doc/page2.png) 
+![info_sheet](doc/info_sheet.png) 
 
 
 

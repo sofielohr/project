@@ -7,7 +7,8 @@ https://sofielohr.github.io/project/
 
 ### Visualizations
 
-![page](doc/page.png) 
+![page1](doc/page1.png) 
+![page1](doc/page2.png) 
 
 The first visualization is a bubblechart. It's purpose is to show the relationship between the average temperature of a country and it's tourism. The tourism variable is the number of arrivals at tourist accommodation establisments. The color represents the temperature going from blue (colder) to red (warmer). The size represents the tourism, the bigger the circle, the higher the tourist arrivals. The default graph is data from 2010 and it can be set to every year from 2010 to 2017 by a timeslider. 
 

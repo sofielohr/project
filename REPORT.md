@@ -58,33 +58,33 @@ Since processing my data was a bit complicated, I will shortly describe the step
 
 + The circle_legend function creates the circle legend.
 
-The function redraw updates the bubble chart every time the slider time is changed. First it selects and joins the data, then it exits and removes old bubbles, then it updates and then it creates the new values. Also the stroke and tooltip when mouseover are created. In this function the updating of the line and piechart is done by the .on("click"), calling the functions update_line (linechart.js), update_pie (piechart.js) and update_text (linechart.js). 
++ The function redraw updates the bubble chart every time the slider time is changed. First it selects and joins the data, then it exits and removes old bubbles, then it updates and then it creates the new values. Also the stroke and tooltip when mouseover are created. In this function the updating of the line and piechart is done by the .on("click"), calling the functions update_line (linechart.js), update_pie (piechart.js) and update_text (linechart.js). 
 
 #### linechart.js
-The file starts with the function line_data to process the data. This is done in a similar way as in the bubblechart.js file by going over the import files and creating a dataset with the same structure. 
++ The file starts with the function line_data to process the data. This is done in a similar way as in the bubblechart.js file by going over the import files and creating a dataset with the same structure. 
 
-In the function line the whole linechart is made, including tooltips, axis, title etc. The data is formatted a little bit differently so making the linechart is easier. Also a text to show which country and year is made in this function. This function is called only once in main.js. 
++ In the function line the whole linechart is made, including tooltips, axis, title etc. The data is formatted a little bit differently so making the linechart is easier. Also a text to show which country and year is made in this function. This function is called only once in main.js. 
 
-For updating we use the function update_line. Here, the linechart is updated in a similar way as the redraw function. Also the line and dot update is specified differently for countries with no temperature data in the specified year that are clicked. This function is called in the .on("click") in the redraw function every time a country is clicked. 
++ For updating we use the function update_line. Here, the linechart is updated in a similar way as the redraw function. Also the line and dot update is specified differently for countries with no temperature data in the specified year that are clicked. This function is called in the .on("click") in the redraw function every time a country is clicked. 
 
-Lastly, the update_text function is also called at this moment to update the text that shows the chosen country and year. 
++ Lastly, the update_text function is also called at this moment to update the text that shows the chosen country and year. 
 
 #### piechart.js
-In this file again the data is processed in a similar way as the previous process functions. Only the dataset is sturctured a bit differently so the switch between the piecharts is easy. 
++ In this file again the data is processed in a similar way as the previous process functions. Only the dataset is sturctured a bit differently so the switch between the piecharts is easy. 
 
-Then the piechart function makes the piechart and calls the update_pie function to create the piechart the first time. 
++ Then the piechart function makes the piechart and calls the update_pie function to create the piechart the first time. 
 
-The update_pie function is called when a country is clicked to update the piecharts. Inside this funtion is the interactive_pie function which is called when the radio buttons is changed. Every time the update_pie function is called (from the click on a country), the piechart is set to the option 'incoming'. 
++ The update_pie function is called when a country is clicked to update the piecharts. Inside this funtion is the interactive_pie function which is called when the radio buttons is changed. Every time the update_pie function is called (from the click on a country), the piechart is set to the option 'incoming'. 
 
 ## Challenges
 
-A big challenge for me was de data. First, processing the data in python took longer than expected because of the difficult structure of the climate data. The files had to be combined from different files and afterwards they had to be modified a lot. 
++ A big challenge for me was de data. First, processing the data in python took longer than expected because of the difficult structure of the climate data. The files had to be combined from different files and afterwards they had to be modified a lot. 
 
-Also in javascript, I first wrote the process scripts with somewhat the same structure for all the graphs. When implementing the graphs, I everytime found out the structure I used was not compatible with the example format I used for the graph. After a while I got a tip in the standup to first implement the graphs exactly the same way as the examples so you could replicate that. 
++ Also in javascript, I first wrote the process scripts with somewhat the same structure for all the graphs. When implementing the graphs, I everytime found out the structure I used was not compatible with the example format I used for the graph. After a while I got a tip in the standup to first implement the graphs exactly the same way as the examples so you could replicate that. 
 
-Another challenge, especially in the end, was because of my way of working. Because when I implemented one of the graphs in the most simple way, I continued to the next graph without making it the exact way I wanted. So in the last weeks I had to add and change a lot in the graphs to for example make the bubble chart moving and interactive. Also things like legends and adding colors had to be done still, which were suddanly a bit harder than expected, resulting in more work and debugging than I expected. 
++ Another challenge, especially in the end, was because of my way of working. Because after I implemented one of the graphs in the most simple way, I continued to the next graph without making it the exact way I wanted. So in the last weeks I had to add and change a lot in the graphs to, for example, make the bubble chart moving and interactive. Also things like legends and adding colors had to be done still, which were suddanly a bit harder than expected, resulting in more work and debugging than I expected. For example, the colors of the bubble chart (an important part of my visualization) depended on the temperature data. First, I had to add the temperature data to the existing data used in the bubble chart and then also make the color scale function. Even when I implemented something I was happy about, I fount out after a couple of days this was not even working right and the color scale reversed randomly. In the end I just used a threshold with a manually added color range. 
 
 #### Changes
-Changes regarding the design document aren't that much. I'm very happy even with the graphs I chose. Especially the bubble chart, which I think worked out really pretty. The only thing I did not implement was the pop up screen for the 2 graphs. This was because of a tip I got to put the graphs on the same screen for more clearness. 
+Changes regarding the design document aren't that much. I'm very happy with the graphs I chose. Especially the bubble chart, which I think worked out really pretty. The only thing I did not implement was the pop up screen for the 2 graphs. This was because of a tip I got to put the graphs on the same screen for more clearness. 
 
 This is also the reason I think it's good I did not implement the pop up screen. The things I wish I had done differently are the ones I struggled with the most. I wish I chosen an easier dataset, beforehand explored the datastructure of the example better and implemented the graphs completely with all (or most) of it's features before moving on. 

@@ -153,10 +153,10 @@ function line(data, country, year){
         .on("mousemove", function(d){
 			var tourism = Math.round(d.tourism)
 
-			var x_pos = d3v5.mouse(this)[0] - 61;
-			var y_pos = d3v5.mouse(this)[1] - 61;
+			var x_pos = d3v5.mouse(this)[0] - 26;
+			var y_pos = d3v5.mouse(this)[1] - 26;
 
-			var html = "<span><b> Tourism:</b>: " + tourism + "</span>";
+			var html = "<span><b> Tourism</b>: " + tourism + "</span>";
                   
 			tooltip
 				.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
@@ -182,8 +182,8 @@ function line(data, country, year){
         .on("mousemove", function(d){
 			var temperature = Math.round(d.temperature)
 
-			var x_pos = d3v5.mouse(this)[0] - 61;
-			var y_pos = d3v5.mouse(this)[1] - 61;
+			var x_pos = d3v5.mouse(this)[0] - 26;
+			var y_pos = d3v5.mouse(this)[1] - 26;
 
 			var html = "<span><b> Temperature</b>: " + temperature + "</span>";
 
@@ -279,7 +279,7 @@ function line(data, country, year){
    // add Tooltip
     var tooltip = svg.append("foreignObject")
     .attr("width", 200)
-    .attr("height", 60)
+    .attr("height", 25)
     .style("class", "tooltip")
 
 
@@ -358,10 +358,10 @@ function update_line(data, year, country) {
 		.on("mousemove", function(d){
 			var tourism = Math.round(d.tourism)
 
-			var x_pos = d3v5.mouse(this)[0] - 61;
-			var y_pos = d3v5.mouse(this)[1] - 61;
+			var x_pos = d3v5.mouse(this)[0] - 26;
+			var y_pos = d3v5.mouse(this)[1] - 26;
                   
-			var html = "<span><b> Tourism:</b>: " + tourism + "</span>";
+			var html = "<span><b> Tourism</b>: " + tourism + "</span>";
                   
 			tooltip
 				.attr("transform", "translate(" + x_pos + "," + y_pos + ")")
@@ -411,8 +411,8 @@ function update_line(data, year, country) {
         .on("mousemove", function(d){
 			var temperature = Math.round(d.temperature)
 
-			var x_pos = d3v5.mouse(this)[0] - 61;
-			var y_pos = d3v5.mouse(this)[1] - 61;
+			var x_pos = d3v5.mouse(this)[0] - 26;
+			var y_pos = d3v5.mouse(this)[1] - 26;
                   
 			var html = "<span><b> Temperature</b>: " + temperature + "</span>";
                   

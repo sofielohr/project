@@ -16,51 +16,51 @@ Updating the graph when changing the year in the slider is done with the functio
 
 A more detailed description of all the functions is given in Components. 
 
-### Components
-##### index.html and information.html
-The index.html file contains all the javascript files and the external imports (like D3). The information file contains the info in html.
+## Components
+### index.html and information.html
++ The index.html file contains all the javascript files and the external imports (like D3). The information file contains the info in html.
 
-##### Python
+### Python
 Since processing my data was a bit complicated, I will shortly describe the steps I made in the files. 
 
-###### process_tourism.py
-This file loads the input file (tour_occ_arm_1_Data.csv) into a pandas dataframe. Then the functions process and process_pie delete unnecessary rows and columns and the data is formatted. The function can respectively be used for the bubble and line data or the pie data. For the bubble and pie data, the function year_data is used to make yearly data from the month data. Then it converts to json. 
+#### process_tourism.py
++ This file loads the input file (tour_occ_arm_1_Data.csv) into a pandas dataframe. Then the functions process and process_pie delete unnecessary rows and columns and the data is formatted. The function can respectively be used for the bubble and line data or the pie data. For the bubble and pie data, the function year_data is used to make yearly data from the month data. Then it converts to json. 
 
-###### piedata.py
-This script only deleted unnecessary rows and columns and formats the data (tour_dem_ttw_1_Data) in the right way. This data is the 'outgoing' data for the piechart and is already yearly data. Last, it converts to json.
+#### piedata.py
++ This script only deleted unnecessary rows and columns and formats the data (tour_dem_ttw_1_Data) in the right way. This data is the 'outgoing' data for the piechart and is already yearly data. Last, it converts to json.
 
-###### process_climate.py
-This file loads and processes the temperature data. The data from Ecad comes in a folder with 4 types of txt files. First a file stations.txt with a table of all the weather stations (codes), the corresponding country code and some other variables. Then there are over 4000 files of all the daily average temperature of the different weather stations. The other two files elements.txt and sources.txt will not be used. 
+#### process_climate.py
++ This file loads and processes the temperature data. The data from Ecad comes in a folder with 4 types of txt files. First a file stations.txt with a table of all the weather stations (codes), the corresponding country code and some other variables. Then there are over 4000 files of all the daily average temperature of the different weather stations. The other two files elements.txt and sources.txt will not be used. 
 
-The file loops over all the files, skipping elements.txt and sources.txt, processing the weather station files and loading the stations file. The individual weather station files are first formatted (also adding/deleting rows/columns), then made into monthly data (from daily) and then combined to the total data file. 
++ The file loops over all the files, skipping elements.txt and sources.txt, processing the weather station files and loading the stations file. The individual weather station files are first formatted (also adding/deleting rows/columns), then made into monthly data (from daily) and then combined to the total data file. 
 
-The total datafile is then processed as follows:
-+ The file is merged with the stations dataframe so the country codes can be used.
-+ Then the individual weather station data is combined per country.
-+ The country names (from country_names.csv) are added.
-+ Another dataframe with yearly data is made.
-+ Both the dataframes are converted to json.
++ The total datafile is then processed as follows:
+	+ The file is merged with the stations dataframe so the country codes can be used.
+	+ Then the individual weather station data is combined per country.
+	+ The country names (from country_names.csv) are added.
+	+ Another dataframe with yearly data is made.
+	+ Both the dataframes are converted to json.
 
 
-##### Javascript
+### Javascript
 
-###### main.js
-The file main.js is described before in the general overview.
+#### main.js
++ The file main.js is described before in the general overview.
 
-###### bubblechart.js
-This file contains the functions process, which processes the tourism and climate data by going over the imported data (both climate and tourism) and adding it to the dataset. The structure of the dataset is an Object with as keys the year and the values another Object. In this object the keys are the country names and the values again another Object with the variables per country.
+#### bubblechart.js
++ This file contains the functions process, which processes the tourism and climate data by going over the imported data (both climate and tourism) and adding it to the dataset. The structure of the dataset is an Object with as keys the year and the values another Object. In this object the keys are the country names and the values again another Object with the variables per country.
 
-The next function is the function bubble which formats the data in the specific format for a bubble chart and creates the bubble chart (for the first time) and the color legend by calling respectively redraw (outside the function bubble) and color_legend (inside the function bubble).
++ The next function is the function bubble which formats the data in the specific format for a bubble chart and creates the bubble chart (for the first time) and the color legend by calling respectively redraw (outside the function bubble) and color_legend (inside the function bubble).
 
-The color_legend function creates the color legend.
++ The color_legend function creates the color legend.
 
-The slider function creates the slider, calls the bubble function for the first time and again calls the redraw function when the slider is used to change the country.
++ The slider function creates the slider, calls the bubble function for the first time and again calls the redraw function when the slider is used to change the country.
 
-The circle_legend function creates the circle legend.
++ The circle_legend function creates the circle legend.
 
 The function redraw updates the bubble chart every time the slider time is changed. First it selects and joins the data, then it exits and removes old bubbles, then it updates and then it creates the new values. Also the stroke and tooltip when mouseover are created. In this function the updating of the line and piechart is done by the .on("click"), calling the functions update_line (linechart.js), update_pie (piechart.js) and update_text (linechart.js). 
 
-###### linechart.js
+#### linechart.js
 The file starts with the function line_data to process the data. This is done in a similar way as in the bubblechart.js file by going over the import files and creating a dataset with the same structure. 
 
 In the function line the whole linechart is made, including tooltips, axis, title etc. The data is formatted a little bit differently so making the linechart is easier. Also a text to show which country and year is made in this function. This function is called only once in main.js. 
@@ -69,7 +69,7 @@ For updating we use the function update_line. Here, the linechart is updated in 
 
 Lastly, the update_text function is also called at this moment to update the text that shows the chosen country and year. 
 
-###### piechart.js
+#### piechart.js
 In this file again the data is processed in a similar way as the previous process functions. Only the dataset is sturctured a bit differently so the switch between the piecharts is easy. 
 
 Then the piechart function makes the piechart and calls the update_pie function to create the piechart the first time. 
@@ -78,7 +78,7 @@ The update_pie function is called when a country is clicked to update the piecha
 
 ## Challenges
 
-A big challenge for me was de data. First, processing the data in python took longer than expected because of the different structure of the climate data. The files had to be combined from different files and afterwards they had to be modified a lot. 
+A big challenge for me was de data. First, processing the data in python took longer than expected because of the difficult structure of the climate data. The files had to be combined from different files and afterwards they had to be modified a lot. 
 
 Also in javascript, I first wrote the process scripts with somewhat the same structure for all the graphs. When implementing the graphs, I everytime found out the structure I used was not compatible with the example format I used for the graph. After a while I got a tip in the standup to first implement the graphs exactly the same way as the examples so you could replicate that. 
 
